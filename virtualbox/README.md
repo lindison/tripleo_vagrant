@@ -1,1 +1,0 @@
-# Vagrant Files for VirtualBox
