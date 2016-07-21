@@ -1,0 +1,71 @@
+Bringing machine 'triple01' up with 'libvirt' provider...
+Bringing machine 'triple02' up with 'libvirt' provider...
+==> triple01: Creating image (snapshot of base box volume).
+==> triple02: Creating image (snapshot of base box volume).
+==> triple02: Creating domain with the following settings...
+==> triple02:  -- Name:              under_cloud_triple02
+==> triple02:  -- Domain type:       kvm
+==> triple01: Creating domain with the following settings...
+==> triple01:  -- Name:              under_cloud_triple01
+==> triple02:  -- Cpus:              1
+==> triple01:  -- Domain type:       kvm
+==> triple02:  -- Memory:            2048M
+==> triple02:  -- Management MAC:    
+==> triple01:  -- Cpus:              1
+==> triple01:  -- Memory:            2048M
+==> triple02:  -- Loader:            
+==> triple01:  -- Management MAC:    
+==> triple01:  -- Loader:            
+==> triple02:  -- Base box:          centos/7
+==> triple01:  -- Base box:          centos/7
+==> triple02:  -- Storage pool:      default
+==> triple01:  -- Storage pool:      default
+==> triple01:  -- Image:             /var/lib/libvirt/images/under_cloud_triple01.img (41G)
+==> triple01:  -- Volume Cache:      default
+==> triple02:  -- Image:             /var/lib/libvirt/images/under_cloud_triple02.img (41G)
+==> triple02:  -- Volume Cache:      default
+==> triple01:  -- Kernel:            
+==> triple02:  -- Kernel:            
+==> triple01:  -- Initrd:            
+==> triple01:  -- Graphics Type:     vnc
+==> triple02:  -- Initrd:            
+==> triple01:  -- Graphics Port:     5900
+==> triple02:  -- Graphics Type:     vnc
+==> triple01:  -- Graphics IP:       127.0.0.1
+==> triple02:  -- Graphics Port:     5900
+==> triple02:  -- Graphics IP:       127.0.0.1
+==> triple01:  -- Graphics Password: Not defined
+==> triple02:  -- Graphics Password: Not defined
+==> triple01:  -- Video Type:        cirrus
+==> triple02:  -- Video Type:        cirrus
+==> triple01:  -- Video VRAM:        9216
+==> triple02:  -- Video VRAM:        9216
+==> triple01:  -- Keymap:            en-us
+==> triple02:  -- Keymap:            en-us
+==> triple01:  -- TPM Path:          
+==> triple02:  -- TPM Path:          
+==> triple01:  -- INPUT:             type=mouse, bus=ps2
+==> triple02:  -- INPUT:             type=mouse, bus=ps2
+==> triple01:  -- Command line : 
+==> triple02:  -- Command line : 
+==> triple01: Creating shared folders metadata...
+==> triple02: Creating shared folders metadata...
+==> triple02: Starting domain.
+==> triple01: Starting domain.
+==> triple02: Waiting for domain to get an IP address...
+==> triple02: Waiting for cleanup before exiting...
+==> triple01: An error occurred. The error will be shown after all tasks complete.
+==> triple02: Removing domain...
+==> triple02: An error occurred. The error will be shown after all tasks complete.
+An error occurred while executing multiple actions in parallel.
+Any errors that occurred are shown below.
+
+An error occurred while executing the action on the 'triple01'
+machine. Please handle this error then try again:
+
+Vagrant exited after cleanup due to external interrupt.
+
+An error occurred while executing the action on the 'triple02'
+machine. Please handle this error then try again:
+
+Vagrant exited after cleanup due to external interrupt.
