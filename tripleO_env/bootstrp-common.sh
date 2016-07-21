@@ -6,5 +6,3 @@
 # cp -a /vagrant/examples/* /home/vagrant/.examples
 # cp -a /vagrant/m* /home/vagrant
 # chown -R vagrant:vagrant /home/vagrant
-
-# configure hosts file for our internal network defined by Vagrantfile

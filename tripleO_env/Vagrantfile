@@ -18,6 +18,7 @@ Vagrant.configure(2) do |config|
           vb.memory = "2048"
         end
         under.vm.provision :shell, path: "bootstrp-common.sh"
+        under.vm.provision :shell, path: "bootstrp-bash.sh"
         under.vm.provision :shell, path: "bootstrp-ooo.sh"
     end
   end
@@ -38,6 +39,7 @@ Vagrant.configure(2) do |config|
 
         end
         rdo.vm.provision :shell, path: "bootstrp-common.sh"
+        rdo.vm.provision :shell, path: "bootstrp-bash.sh"
         rdo.vm.provision :shell, path: "bootstrp-rdo.sh"
     end
   end
@@ -58,6 +60,7 @@ Vagrant.configure(2) do |config|
 
         end
         compute.vm.provision :shell, path: "bootstrp-common.sh"
+        compute.vm.provision :shell, path: "bootstrp-bash.sh"
         compute.vm.provision :shell, path: "bootstrp-compute.sh"
     end
   end
@@ -75,6 +78,7 @@ Vagrant.configure(2) do |config|
 
         end
         maria.vm.provision :shell, path: "bootstrp-common.sh"
+        maria.vm.provision :shell, path: "bootstrp-bash.sh"
         maria.vm.provision :shell, path: "bootstrp-maria.sh"
     end
   end
@@ -91,12 +95,13 @@ Vagrant.configure(2) do |config|
 
         end
         acs.vm.provision :shell, path: "bootstrp-common.sh"
+        acs.vm.provision :shell, path: "bootstrp-bash.sh"
         acs.vm.provision :shell, path: "bootstrp-ansible.sh"
     end
   end
 
   # Create Database Nodes for MariaDB
-  (1..1).each do |i|
+  (0..0).each do |i|
     config.vm.define "docker0#{i}" do |docker|
         docker.vm.box = "yk0/ubuntu-xenial"
         docker.vm.hostname = "docker0#{i}"
@@ -108,6 +113,7 @@ Vagrant.configure(2) do |config|
 
         end
         docker.vm.provision :shell, path: "bootstrp-common.sh"
+        docker.vm.provision :shell, path: "bootstrp-bash.sh"
         docker.vm.provision :shell, path: "bootstrp-docker.sh"
     end
   end
