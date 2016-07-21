@@ -1,0 +1,6 @@
+*/*.retry
+*.retry
+.vagrant/
+,git/
+.data
+*/vagrant*
