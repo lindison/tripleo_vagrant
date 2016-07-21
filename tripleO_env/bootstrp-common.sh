@@ -8,17 +8,23 @@
 # chown -R vagrant:vagrant /home/vagrant
 
 # configure hosts file for our internal network defined by Vagrantfile
-cat >> /etc/hosts <<EOL
+cat >> /etc/ansible/hosts <<EOL
 
-# ansible lab nodes
-192.168.33.10  acs
-192.168.33.20  lb1
-192.168.33.31  dev1
-192.168.33.32  dev2
-192.168.33.21  web1
-192.168.33.22  web2
-192.168.33.23  web3
-192.168.33.24  web4
-192.168.33.25  web5
-192.168.33.50  db1
+[undercloud]
+ooo01
+
+[overcloud]
+rdo01
+rdo02
+
+[occompute]
+compute01
+compute02
+
+[mariadb]
+maria01
+
+[docker]
+docker01
+
 EOL
