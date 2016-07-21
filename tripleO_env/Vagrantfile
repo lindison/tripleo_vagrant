@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
   end
 
   # Create an OverCloud Servers
-  (1..3).each do |i|
+  (1..1).each do |i|
     config.vm.define "rdo0#{i}" do |rdo|
         rdo.vm.box = "centos/7"
         rdo.vm.hostname = "rdo0#{i}"
@@ -43,7 +43,7 @@ Vagrant.configure(2) do |config|
   end
 
   # Create OverCLoud Compute Nodes for OpenStack
-  (1..2).each do |i|
+  (1..1).each do |i|
     config.vm.define "compute0#{i}" do |compute|
         compute.vm.box = "centos/7"
         compute.vm.hostname = "compute0#{i}"

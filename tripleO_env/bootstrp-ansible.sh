@@ -12,3 +12,25 @@ apt-get -y install tree
 # cp -a /vagrant/m* /home/vagrant
 # chown -R vagrant:vagrant /home/vagrant
 
+# Configure Ansible Hosts file.
+
+cat >> /etc/ansible/hosts <<EOL
+
+[undercloud]
+ooo01
+
+[overcloud]
+rdo01
+rdo02
+
+[occompute]
+compute01
+compute02
+
+[mariadb]
+maria01
+
+[docker]
+docker01
+
+EOL
