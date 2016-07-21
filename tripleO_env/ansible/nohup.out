@@ -1,4 +1,0 @@
-There is a syntax error in the following Vagrantfile. The syntax error
-message is reproduced below for convenience:
-
-/home/lindis/git/vagrant_start_files/tripleO_env/ansible/Vagrantfile:22: syntax error, unexpected keyword_end, expecting end-of-input

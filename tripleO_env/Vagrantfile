@@ -6,16 +6,18 @@
 Vagrant.configure(2) do |config|
   # Create UnderCloud Servers
   (1..1).each do |i|
-    config.vm.define "triple0#{i}" do |node|
+    config.vm.define "tripleo#{i}" do |node|
         node.vm.box = "centos/7"
-        node.vm.hostname = "triple0#{i}"
-        node.vm.network :private_network, ip: "10.20.30.1#{i}"
-        node.vm.network :private_network, ip: "192.168.11.1#{i}"
-        node.vm.network :private_network, ip: "172.168.10.1#{i}"
+        node.vm.hostname = "tripleo#{i}"
+        node.vm.network :private_network, ip: "10.0.0.0#{i}"
+        node.vm.network :private_network, ip: "10.0.2.0#{i}"
+        node.vm.network :private_network, ip: "10.0.4.0#{i}"
+        node.vm.network :private_network, ip: "10.0.10.0#{i}"
 #        node.vm.network "forwarded_port", guest: 80, host: 31480
         node.vm.provider "libvirt" do |vb|
           vb.memory = "4096"
         end
+        node.vm.provision :shell, path: "bootstrp-ooo.sh"
     end
   end
 
@@ -24,12 +26,14 @@ Vagrant.configure(2) do |config|
     config.vm.define "rdo0#{i}" do |node|
         node.vm.box = "centos/7"
         node.vm.hostname = "rdo0#{i}"
-        node.vm.network :private_network, ip: "10.20.30.10#{i}"
-        node.vm.network :private_network, ip: "192.168.11.10#{i}"
-        node.vm.network :private_network, ip: "172.168.10.10#{i}"
+        node.vm.network :private_network, ip: "10.0.0.1#{i}"
+        node.vm.network :private_network, ip: "10.0.2.1#{i}"
+        node.vm.network :private_network, ip: "10.0.4.1#{i}"
+        node.vm.network :private_network, ip: "10.0.6.1#{i}"
+        node.vm.network :private_network, ip: "10.0.10.1#{i}"
 #        node.vm.network "forwarded_port", guest: 80, host: 31480
         node.vm.provider "libvirt" do |vb|
-          vb.memory = "4096"
+          vb.memory = "2048"
 
         end
     end
@@ -40,14 +44,17 @@ Vagrant.configure(2) do |config|
     config.vm.define "compute0#{i}" do |node|
         node.vm.box = "centos/7"
         node.vm.hostname = "compute0#{i}"
-        node.vm.network :private_network, ip: "10.20.30.12#{i}"
-        node.vm.network :private_network, ip: "192.168.11.12#{i}"
-        node.vm.network :private_network, ip: "172.168.10.12#{i}"
+        node.vm.network :private_network, ip: "10.0.0.2#{i}"
+        node.vm.network :private_network, ip: "10.0.2.2#{i}"
+        node.vm.network :private_network, ip: "10.0.4.2#{i}"
+        node.vm.network :private_network, ip: "10.0.6.2#{i}"
+        node.vm.network :private_network, ip: "10.0.10.0#{i}"
 #        node.vm.network "forwarded_port", guest: 80, host: 31480
         node.vm.provider "libvirt" do |vb|
           vb.memory = "4096"
 
         end
+        node.vm.provision :shell, path: "bootstrp-compute.sh"
     end
   end
 
@@ -56,9 +63,8 @@ Vagrant.configure(2) do |config|
     config.vm.define "maria0#{i}" do |node|
         node.vm.box = "centos/7"
         node.vm.hostname = "maria0#{i}"
-        node.vm.network :private_network, ip: "10.20.30.13#{i}"
-        node.vm.network :private_network, ip: "192.168.11.13#{i}"
-        node.vm.network :private_network, ip: "172.168.10.13#{i}"
+        node.vm.network :private_network, ip: "10.0.0.3#{i}"
+        node.vm.network :private_network, ip: "10.0.2.3#{i}"
 #        node.vm.network "forwarded_port", guest: 80, host: 31480
         node.vm.provider "libvirt" do |vb|
           vb.memory = "4096"
@@ -72,13 +78,13 @@ Vagrant.configure(2) do |config|
     config.vm.define "ansible0#{i}" do |acs|
         acs.vm.box = "yk0/ubuntu-xenial"
         acs.vm.hostname = "ansible0#{i}"
-        acs.vm.network :private_network, ip: "10.20.30.20#{i}"
+        acs.vm.network :private_network, ip: "10.0.0.4#{i}"
 #        acs.vm.network "forwarded_port", guest: 80, host: 31480
         acs.vm.provider "libvirt" do |vb|
           vb.memory = "2048"
 
         end
-        acs.vm.provision :shell, path: "bootstrp.sh"
+        acs.vm.provision :shell, path: "bootstrp-ansible.sh"
     end
   end
 
