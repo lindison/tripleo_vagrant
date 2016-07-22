@@ -24,7 +24,7 @@ sudo semanage fcontext -a -t etc_t "/etc/pki/instack-certs(/.*)?"
 sudo restorecon -R /etc/pki/instack-certs
 sudo cp cacert.pem /etc/pki/ca-trust/source/anchors/
 sudo update-ca-trust extract
-openstack undercloud install
+runuser -l vagrant -c "openstack undercloud install"
 
 # yum update
 # yum install -y vim tree
