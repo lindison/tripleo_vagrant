@@ -71,3 +71,32 @@
 
     - name: Create /etc/pki/instack-certs
       file: dest=/etc/pki/instack-certs state=directory
+
+    - name: Touch undercloud.pem
+      file: dest=/etc/pki/instack-certs/undercloud.pem
+            state=touch
+
+    - name: Import undercloud.pem
+      file: src=/home/vagrant/undercloud.pem
+            dest=/etc/pki/instack-certs/undercloud.pem
+            state=file
+            mode=0600
+
+    - name: Update SEManage
+      shell: semanage fcontext -a -t etc_t "/etc/pki/instack-certs(/.*)?"
+
+    - name: Restorecon to instack-certs
+      shell: restorecon -R /etc/pki/instack-certs
+
+    - name: Touch cacert.pem
+      file: dest=/etc/pki/ca-trust/source/anchors/cacert.pem
+            state=touch
+
+    - name: Import cacert.pem
+      file: src=/home/vagrant/cacert.pem
+            dest=/etc/pki/ca-trust/source/anchors/cacert.pem
+            state=file
+            mode=0600
+
+    - name: Update CA Trust
+      shell: update-ca-trust extract
