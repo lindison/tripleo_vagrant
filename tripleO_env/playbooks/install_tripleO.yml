@@ -1,0 +1,51 @@
+--- # Install TripleO undercloud
+- hosts: TripleO
+  remote_user: vagrant
+  become: yes
+  become_method: sudo
+  connection: ssh
+  tasks:
+    - name: Install epel-release and update repo
+      yum: pkg=epel-release state=latest update_cache=yum
+    - name: Get
+      get_url: dest=http://buildlogs.centos.org/centos/7/cloud/x86_64/rdo-trunk-master-tripleo/delorean.repo
+               src=/etc/yum.repos.d/delorean.repo
+               mode=0777
+    - name: Get
+      get_url: dest=http://trunk.rdoproject.org/centos7/delorean-deps.repo
+               src=/etc/yum.repos.d/delorean-deps.repo
+               mode=0777
+
+    - name: Get
+      get_url: dest=http://trunk.rdoproject.org/centos7/current/delorean.repo
+               src=/etc/yum.repos.d/delorean-current.repo
+               mode=0777
+    - name: Install Yum Plugin Priorities and Python Triple O Client
+      yum: pkg={{ item }} state=latest update_cache=yum
+      with_items:
+        - yum-plugin-priorities
+        - python-tripleoclient
+
+
+
+sudo yum -y install epel-release
+sudo curl -L -o /etc/yum.repos.d/delorean.repo http://buildlogs.centos.org/centos/7/cloud/x86_64/rdo-trunk-master-tripleo/delorean.repo
+sudo curl -L -o /etc/yum.repos.d/delorean-deps.repo http://trunk.rdoproject.org/centos7/delorean-deps.repo
+sudo curl -L -o /etc/yum.repos.d/delorean-current.repo http://trunk.rdoproject.org/centos7/current/delorean.repo
+sudo yum -y install yum-plugin-priorities
+sudo yum install -y python-tripleoclient
+cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+export DIB_INSTALLTYPE_puppet_modules=source
+
+
+openssl genrsa -out privkey.pem 2048
+openssl req -new -x509 -key privkey.pem -out cacert.pem -days 365
+cat cacert.pem privkey.pem > undercloud.pem
+
+sudo mkdir /etc/pki/instack-certs
+sudo cp undercloud.pem /etc/pki/instack-certs
+sudo semanage fcontext -a -t etc_t "/etc/pki/instack-certs(/.*)?"
+sudo restorecon -R /etc/pki/instack-certs
+sudo cp cacert.pem /etc/pki/ca-trust/source/anchors/
+sudo update-ca-trust extract
+openstack undercloud install
