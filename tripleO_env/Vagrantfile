@@ -5,7 +5,7 @@
 
 Vagrant.configure(2) do |config|
   # Create UnderCloud Servers
-  (1..1).each do |i|
+  (1..2).each do |i|
     config.vm.define "ooo0#{i}" do |under|
         under.vm.box = "centos/7"
         under.vm.hostname = "ooo0#{i}"
