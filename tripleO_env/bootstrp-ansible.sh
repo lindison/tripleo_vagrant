@@ -8,6 +8,7 @@ apt-get -y install ansible
 apt-get -y install tree
 
 # copy examples into /home/vagrant (from inside the mgmt node)
+mkdir /home/vagrant/playbooks
 cp -a /vagrant/playbooks/* /home/vagrant/playbooks
 # cp -a /vagrant/m* /home/vagrant
 chown -R vagrant:vagrant /home/vagrant
