@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# install ansible (http://docs.ansible.com/intro_installation.html)
+
+
 # yum update
 # yum install -y vim tree
 # yum install -y yum-utils

@@ -24,7 +24,7 @@ Vagrant.configure(2) do |config|
   end
 
   # Create an OverCloud Servers
-  (1..1).each do |i|
+  (1..3).each do |i|
     config.vm.define "rdo0#{i}" do |rdo|
         rdo.vm.box = "centos/7"
         rdo.vm.hostname = "rdo0#{i}"
@@ -40,7 +40,7 @@ Vagrant.configure(2) do |config|
         end
         rdo.vm.provision :shell, path: "bootstrp-common.sh"
         rdo.vm.provision :shell, path: "bootstrp-bash.sh"
-        rdo.vm.provision :shell, path: "bootstrp-rdo.sh"
+#        rdo.vm.provision :shell, path: "bootstrp-rdo.sh"
     end
   end
 
@@ -101,7 +101,7 @@ Vagrant.configure(2) do |config|
   end
 
   # Create Database Nodes for MariaDB
-  (0..0).each do |i|
+  (1..3).each do |i|
     config.vm.define "docker0#{i}" do |docker|
         docker.vm.box = "yk0/ubuntu-xenial"
         docker.vm.hostname = "docker0#{i}"
