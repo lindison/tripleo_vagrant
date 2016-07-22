@@ -39,7 +39,7 @@
         - python-tripleoclient
 
     - name: Create undercloud.conf
-      shell: touch /home/vagrant/undercloud.conf
+      file: dest=/home/vagrant/undercloud.conf state=touch
 
     - name: Copy config template
       file: src=/usr/share/instack-undercloud/undercloud.conf.sample
