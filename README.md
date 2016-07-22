@@ -1,7 +1,7 @@
 # Vagrant build for an OpenStack environment
 
 - This assumes a single undercloud machine
-- Three undercloud machines
+- Three overcloud machines
 - Two compute nodes
 - An Ansible server
 
