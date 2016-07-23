@@ -8,7 +8,7 @@
   * maria01
   * ansible01
 
-3. If Ansible is not the last server created; the ```ssh_setup.sh``` program will need to be run.
+3. If Ansible is not the last server created; the ```ssh_setup.sh``` program will need to be run on the ansible01 server.
 4. Once up, log into the ansible01 server ```vagrant ssh ansbile01``` and run the ```ssh_setup.sh``` program.  
 
 5. When all machines are up and running and you're logged into Ansible, run the following:
