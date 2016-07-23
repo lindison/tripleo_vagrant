@@ -5,7 +5,7 @@
   become: yes
   become_method: sudo
   connection: ssh
-  tasks: 
+  tasks:
   - name: Disable Network Manager, Enable Network, Disable FirewallD
     shell: systemctl disable firewalld && systemctl stop firewalld && \
            systemctl disable NetworkManager && systemctl stop NetworkManager && \
@@ -16,8 +16,8 @@
     yum: pkg=centos-release-openstack-mitaka state=installed
   - name: Update Yum
     yum: update_cache=yes
-  - name: install PackStack
-    shell: packstack --allinone
+#  - name: install PackStack
+#    shell: packstack --allinone
 
 # systemctl disable firewalld
 # systemctl stop firewalld
