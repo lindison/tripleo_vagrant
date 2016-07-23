@@ -1,12 +1,12 @@
 # Vagrant build for an OpenStack environment
 1. Use this Vagrantfile
-..* run the ```make_ssh_keys.sh``` program to create a set of id_rsa keys for use by Ansible.
+  * run the ```make_ssh_keys.sh``` program to create a set of id_rsa keys for use by Ansible.
 2. Simple run ```vagrant up```, the following will get built: 
-* ooo01
-* rdo01
-* compute01
-* maria01
-* ansible01
+  * ooo01
+  * rdo01
+  * compute01
+  * maria01
+  * ansible01
 
 -Once up, log into the ansible01 server ```vagrant ssh ansbile01``` and run the ```ssh_setup.sh``` program.  
 
