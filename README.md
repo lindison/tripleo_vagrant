@@ -14,8 +14,12 @@
 5. When all machines are up and running and you're logged into Ansible, run the following:
   * ```cd playbooks```
   * execute the playbook to run the pre-reqs for running ```openstack undercloud install```
-  * ```ansible-playbook install_tripleO.yml```
-
+  * This playbook installs the pre-reqs for getting the UnderCloud installed. 
+  * ```ansible-playbook install_tripleO.yml``` 
+6. Install the UnderCloud
+  * Once the playbook is run, ssh into the ooo01 server.
+  * from the host, ```vagrant ssh ooo01``` 
+  * run the following command once logged in ```openstack undercloud install```
 - This assumes a single undercloud machine
 - an overcloud machines
 - a compute nodes
