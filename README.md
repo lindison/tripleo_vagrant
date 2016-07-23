@@ -8,7 +8,13 @@
   * maria01
   * ansible01
 
+-If Ansible is not the last server created; the ```ssh_setup.sh``` program will need to be run.
 -Once up, log into the ansible01 server ```vagrant ssh ansbile01``` and run the ```ssh_setup.sh``` program.  
+
+3. When all machines are up and running and you're logged into Ansible, run the following:
+  * ```cd playbooks```
+  * execute the playbook to run the pre-reqs for running ```openstack undercloud install```
+  * ```ansible-playbook install_tripleO.yml```
 
 - This assumes a single undercloud machine
 - an overcloud machines
