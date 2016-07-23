@@ -1,7 +1,7 @@
 #!/bin/bash
 
+On-UnderCloud Node
 openstack undercloud install
-ansible-playbook prepare_undercloud.yml
 openstack overcloud image build --all
 openstack overcloud image upload
 

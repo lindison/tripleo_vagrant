@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+cp /home/vagrant/sync/build_cloud.sh /home/vagrant
+chown vagrant:vagrant /home/vagrant/build_cloud.sh
+
 #yum -y install epel-release
 #curl -L -o /etc/yum.repos.d/delorean.repo http://buildlogs.centos.org/centos/7/cloud/x86_64/rdo-trunk-master-tripleo/delorean.repo
 #curl -L -o /etc/yum.repos.d/delorean-deps.repo http://trunk.rdoproject.org/centos7/delorean-deps.repo
