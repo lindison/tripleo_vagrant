@@ -13,7 +13,8 @@ Vagrant.configure(2) do |config|
         under.vm.network :private_network, ip: "10.0.2.0#{i}"
         under.vm.network :private_network, ip: "10.0.4.0#{i}"
         under.vm.network :private_network, ip: "10.0.10.0#{i}"
-#        node.vm.network "forwarded_port", guest: 80, host: 31480
+        under.vm.network "forwarded_port", guest: 80, host: "8#{i}"
+        #Size the libvirt VM
         under.vm.provider "libvirt" do |vb|
           vb.memory = "8192"
           vb.cpus = "2"
@@ -25,7 +26,7 @@ Vagrant.configure(2) do |config|
   end
 
   # Create an OverCloud Servers
-  (1..1).each do |i|
+  (1..2).each do |i|
     config.vm.define "rdo0#{i}" do |rdo|
         rdo.vm.box = "centos/7"
         rdo.vm.hostname = "rdo0#{i}"
@@ -36,8 +37,8 @@ Vagrant.configure(2) do |config|
         rdo.vm.network :private_network, ip: "10.0.10.1#{i}"
 #        rdo.vm.network "forwarded_port", guest: 80, host: 31480
         rdo.vm.provider "libvirt" do |vb|
-          vb.memory = "2048"
-
+          vb.memory = "4096"
+          vb.cpus = "2"
         end
         rdo.vm.provision :shell, path: "bootstrp-bash.sh"
         rdo.vm.provision :shell, path: "bootstrp-common.sh"
