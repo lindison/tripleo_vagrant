@@ -1,16 +1,15 @@
 # Vagrant build for an OpenStack environment
-- Use this Vagrantfile
-- simple run "vagrant up", the following will get build:
--  ooo01
--  rdo01
--  compute01
--  maria01
--  ansible01
-
+1. Use this Vagrantfile
+2. Simple run "vagrant up", the following will get built:
+..* ooo01
+..* rdo01
+..* compute01
+..* maria01
+..* ansible01
 
 - This assumes a single undercloud machine
-- Three overcloud machines
-- Two compute nodes
+- an overcloud machines
+- a compute nodes
 - An Ansible server
 
 ## This is a work in progress
