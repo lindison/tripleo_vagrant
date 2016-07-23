@@ -1,6 +1,7 @@
 */*.retry
 *.retry
 .vagrant/
+id_rsa*
 ,git/
 .data
 */vagrant*

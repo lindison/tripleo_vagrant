@@ -29,6 +29,8 @@ cat >> /home/vagrant/pass.txt <<EOL
 vagrant
 EOL
 chown vagrant:vagrant /home/vagrant/pass.txt
+cp /vagrant/ssh_setup.sh /home/vagrant/ssh_setup.sh
+chown vagrant:vagrant /home/vagrant/ssh_setup.sh
 runuser -l vagrant -c "/home/vagrant/ssh_setup.sh"
 # runuser -l vagrant -c "ssh-keyscan $(cat /home/vagrant/names) >> /home/vagrant/.ssh/known_hosts"
 # runuser -l vagrant -c "for i in $(cat /home/vagrant/names); do sshpass -f pass.txt ssh-copy-id vagrant@$(cat /home/vagrant/names); done"
