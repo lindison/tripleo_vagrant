@@ -5,7 +5,7 @@
 
 Vagrant.configure(2) do |config|
   # Create UnderCloud Servers
-  (1..3).each do |i|
+  (1..1).each do |i|
     config.vm.define "ooo0#{i}" do |under|
         under.vm.box = "centos/7"
         under.vm.hostname = "ooo0#{i}"
@@ -66,20 +66,20 @@ Vagrant.configure(2) do |config|
   end
 
   # Create Database Nodes for MariaDB
-  (1..1).each do |i|
-    config.vm.define "maria0#{i}" do |maria|
+  (1..3).each do |i|
+    config.vm.define "ceph0#{i}" do |maria|
         maria.vm.box = "centos/7"
-        maria.vm.hostname = "maria0#{i}"
+        maria.vm.hostname = "ceph0#{i}"
         maria.vm.network :private_network, ip: "10.0.0.3#{i}"
         maria.vm.network :private_network, ip: "10.0.2.3#{i}"
 #        node.vm.network "forwarded_port", guest: 80, host: 31480
         maria.vm.provider "libvirt" do |vb|
-          vb.memory = "4096"
+          vb.memory = "512"
 
         end
         maria.vm.provision :shell, path: "bootstrp-bash.sh"
         maria.vm.provision :shell, path: "bootstrp-common.sh"
-        maria.vm.provision :shell, path: "bootstrp-maria.sh"
+        maria.vm.provision :shell, path: "bootstrp-ceph.sh"
     end
   end
 
@@ -97,24 +97,6 @@ Vagrant.configure(2) do |config|
         acs.vm.provision :shell, path: "bootstrp-bash.sh"
         acs.vm.provision :shell, path: "bootstrp-common.sh"
         acs.vm.provision :shell, path: "bootstrp-ansible.sh"
-    end
-  end
-
-  # Create Database Nodes for MariaDB
-  (1..3).each do |i|
-    config.vm.define "docker0#{i}" do |docker|
-        docker.vm.box = "yk0/ubuntu-xenial"
-        docker.vm.hostname = "docker0#{i}"
-        docker.vm.network :private_network, ip: "10.0.0.5#{i}"
-        docker.vm.network :private_network, ip: "10.0.2.5#{i}"
-#        docker.vm.network "forwarded_port", guest: 80, host: 31480
-        docker.vm.provider "libvirt" do |vb|
-          vb.memory = "4096"
-
-        end
-        docker.vm.provision :shell, path: "bootstrp-bash.sh"
-        docker.vm.provision :shell, path: "bootstrp-common.sh"
-        docker.vm.provision :shell, path: "bootstrp-docker.sh"
     end
   end
 
