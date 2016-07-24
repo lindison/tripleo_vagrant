@@ -35,6 +35,7 @@
 - The certs and the relationship between Ansible and the machine still needs to be done. 
 
 ## Additional Notes
+- Vagrant libvirt plugin: https://github.com/vagrant-libvirt/vagrant-libvirt
 - ubuntu_host folder contains a run script to install and configure vagrant for libvirt
 - If you want to set libvirt as the default;
 - ```export VAGRANT_DEFAULT_PROVIDER=libvirt```
