@@ -21,15 +21,14 @@ Vagrant.configure(2) do |config|
         end
         under.vm.provision :shell, path: "bootstrp-bash.sh"
         under.vm.provision :shell, path: "bootstrp-common.sh"
-        under.vm.provision :shell, path: "bootstrp-ooo.sh"
     end
   end
 
   # Create an OverCloud Servers
   (1..2).each do |i|
-    config.vm.define "rdo0#{i}" do |rdo|
+    config.vm.define "controller0#{i}" do |rdo|
         rdo.vm.box = "centos/7"
-        rdo.vm.hostname = "rdo0#{i}"
+        rdo.vm.hostname = "controller0#{i}"
         rdo.vm.network :private_network, ip: "10.0.0.1#{i}"
         rdo.vm.network :private_network, ip: "10.0.2.1#{i}"
         rdo.vm.network :private_network, ip: "10.0.4.1#{i}"
@@ -63,17 +62,33 @@ Vagrant.configure(2) do |config|
         end
         compute.vm.provision :shell, path: "bootstrp-bash.sh"
         compute.vm.provision :shell, path: "bootstrp-common.sh"
-        compute.vm.provision :shell, path: "bootstrp-compute.sh"
     end
   end
 
-  # Create Database Nodes for MariaDB
+  # Create MariaDB Nodes
+  (1..2).each do |i|
+    config.vm.define "db0#{i}" do |maria|
+        maria.vm.box = "centos/7"
+        maria.vm.hostname = "db0#{i}"
+        maria.vm.network :private_network, ip: "10.0.0.3#{i}"
+        maria.vm.network :private_network, ip: "10.0.2.3#{i}"
+#        node.vm.network "forwarded_port", guest: 80, host: 31480
+        maria.vm.provider "libvirt" do |vb|
+          vb.memory = "2048"
+
+        end
+        maria.vm.provision :shell, path: "bootstrp-bash.sh"
+        maria.vm.provision :shell, path: "bootstrp-common.sh"
+    end
+  end
+
+  # Create Ceph Nodes for CEPH
   (1..3).each do |i|
     config.vm.define "ceph0#{i}" do |maria|
         maria.vm.box = "centos/7"
         maria.vm.hostname = "ceph0#{i}"
-        maria.vm.network :private_network, ip: "10.0.0.3#{i}"
-        maria.vm.network :private_network, ip: "10.0.2.3#{i}"
+        maria.vm.network :private_network, ip: "10.0.0.4#{i}"
+        maria.vm.network :private_network, ip: "10.0.2.4#{i}"
 #        node.vm.network "forwarded_port", guest: 80, host: 31480
         maria.vm.provider "libvirt" do |vb|
           vb.memory = "512"
@@ -81,7 +96,6 @@ Vagrant.configure(2) do |config|
         end
         maria.vm.provision :shell, path: "bootstrp-bash.sh"
         maria.vm.provision :shell, path: "bootstrp-common.sh"
-        maria.vm.provision :shell, path: "bootstrp-ceph.sh"
     end
   end
 
@@ -90,7 +104,7 @@ Vagrant.configure(2) do |config|
     config.vm.define "ansible0#{i}" do |acs|
         acs.vm.box = "yk0/ubuntu-xenial"
         acs.vm.hostname = "ansible0#{i}"
-        acs.vm.network :private_network, ip: "10.0.0.4#{i}"
+        acs.vm.network :private_network, ip: "10.0.0.5#{i}"
 #        acs.vm.network "forwarded_port", guest: 80, host: 31480
         acs.vm.provider "libvirt" do |vb|
           vb.memory = "2048"

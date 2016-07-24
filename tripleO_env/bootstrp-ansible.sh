@@ -7,12 +7,13 @@ apt-get update
 apt-get -y install ansible
 apt-get -y install tree
 
-# copy examples into /home/vagrant (from inside the mgmt node)
+# copy playbooks into /home/vagrant (from inside the mgmt node)
 mkdir /home/vagrant/playbooks
 cp -a /vagrant/playbooks/* /home/vagrant/playbooks
 # cp -a /vagrant/m* /home/vagrant
 chown -R vagrant:vagrant /home/vagrant
 
+# sets up ssh keys
 cp /vagrant/id_rsa /home/vagrant/.ssh/
 cp /vagrant/id_rsa.pub /home/vagrant/.ssh/
 chown vagrant:vagrant /home/vagrant/.ssh/id_rsa
