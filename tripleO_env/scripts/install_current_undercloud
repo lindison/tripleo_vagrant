@@ -23,3 +23,10 @@ sudo restorecon -R /etc/pki/instack-certs
 sudo cp cacert.pem /etc/pki/ca-trust/source/anchors/
 sudo update-ca-trust extract
 openstack undercloud install
+export NODE_DIST=centos7
+export USE_DELOREAN_TRUNK=1
+export DELOREAN_TRUNK_REPO="http://buildlogs.centos.org/centos/7/cloud/x86_64/rdo-trunk-master-tripleo/"
+export DELOREAN_REPO_FILE="delorean.repo"
+export DIB_INSTALLTYPE_puppet_modules=source
+openstack overcloud image build --all
+openstack overcloud image upload
