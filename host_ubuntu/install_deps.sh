@@ -7,3 +7,4 @@ sudo dpkg -i vagrant_1.8.4_x86_64.deb
 sud apt-get update
 sudo apt-get install -y libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev ruby-libvirt
 vagrant plugin install vagrant-libvirt
+export VAGRANT_DEFAULT_PROVIDER=libvirt
