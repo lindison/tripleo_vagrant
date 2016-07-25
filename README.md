@@ -13,7 +13,7 @@
   * Define the "undercloud.conf.example" to fit your needs.
   * Vagrant file builds the following networks:
     * 10.0.0.0/23
-    * 10.0.2.0/23
+    * 10.0.2.0/23 
     * 10.0.4.0/23
     * 10.0.6.0/23
     * 10.0.10.0/23
