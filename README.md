@@ -1,29 +1,24 @@
 # Vagrant build for an OpenStack environment
-1. Use this Vagrantfile
-  * run the ```make_ssh_keys.sh``` program to create a set of id_rsa keys for use by Ansible.
-2. Simple run ```vagrant up```, the following will get built: 
-  * ooo01
-  * rdo01
-  * compute01
-  * maria01
-  * ansible01
-
-3. If Ansible is not the last server created; the ```ssh_setup.sh``` program will need to be run on the ansible01 server.
-4. Once up, log into the ansible01 server ```vagrant ssh ansbile01``` and run the ```ssh_setup.sh``` program.  
-
-5. When all machines are up and running and you're logged into Ansible, run the following:
-  * ```cd playbooks```
-  * execute the playbook to run the pre-reqs for running ```openstack undercloud install```
-  * This playbook installs the pre-reqs for getting the UnderCloud installed. 
-  * ```ansible-playbook install_tripleO.yml``` 
-6. Install the UnderCloud
-  * Once the playbook is run, ssh into the ooo01 server.
-  * from the host, ```vagrant ssh ooo01``` 
-  * run the following command once logged in ```openstack undercloud install```
-- This assumes a single undercloud machine
-- an overcloud machines
-- a compute nodes
-- An Ansible server
+## Working items
+0. Working on PXE boot
+  * PXE is generally working but need to get undercloud stable
+  * need to figure out if this is doable using libvirt
+  * resolved mapping local networks
+  * resolved nested
+  * put each deployment into its own folder for now
+ 
+## Using this project (This is a work in progress).
+1. Use these Vagrantfiles
+  * update the Vagrant files in each of the folders to fit your needs
+  * Define the "undercloud.conf.example" to fit your needs.
+  * Vagrant file builds the following networks:
+    * 10.0.0.0/23
+    * 10.0.2.0/23
+    * 10.0.4.0/23
+    * 10.0.6.0/23
+    * 10.0.10.0/23
+    * USES network 10.1.2.0/24 for PXE boots on a host bridge named "br-pxe"
+  * ./build_undercloud.sh builds the undercloud server. 
 
 ## This is a work in progress
 - As mentioned, a work in progress
