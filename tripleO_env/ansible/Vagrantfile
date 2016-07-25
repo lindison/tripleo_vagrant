@@ -1,0 +1,23 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Boxes to build a baseline Triple0 deployment
+
+Vagrant.configure(2) do |config|
+  # Create an Ansible Server
+  (1..1).each do |i|
+    config.vm.define "ansible0#{i}" do |acs|
+        acs.vm.box = "yk0/ubuntu-xenial"
+        acs.vm.hostname = "ansible0#{i}"
+        acs.vm.network :private_network, ip: "10.0.0.5#{i}"
+#        acs.vm.network "forwarded_port", guest: 80, host: 31480
+        acs.vm.provider "libvirt" do |vb|
+          vb.memory = "2048"
+
+        end
+        acs.vm.provision :shell, path: "../bootstrp-bash.sh"
+        acs.vm.provision :shell, path: "../bootstrp-ansible.sh"
+    end
+  end
+
+end
