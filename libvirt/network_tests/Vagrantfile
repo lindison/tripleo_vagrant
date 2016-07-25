@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Box to run services for the PXE network (DHCP, DNS, etc)
+
+Vagrant.configure(2) do |config|
+  # Create UnderCloud Servers
+  (1..1).each do |i|
+    config.vm.define "ipam0#{i}" do |ipam|
+        ipam.vm.box = "centos/7"
+        ipam.vm.hostname = "ooo0#{i}"
+       # Network Configuration
+        ipam.vm.network :private_network, ip: "10.0.0.25#{i}"
+        ipam.vm.network :private_network, ip: "10.0.2.25#{i}"
+        ipam.vm.network :private_network, ip: "10.0.4.25#{i}"
+        ipam.vm.network :private_network, ip: "10.0.6.25#{i}"
+        ipam.vm.network :private_network, ip: "10.0.10.25#{i}"
+        ipam.vm.network :public_network, :dev => "br-ex", :mode => "bridge", :type => "bridge"
+        ipam.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge"
+        ipam.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge"
+       # Port forwarding
+        ipam.vm.network "forwarded_port", guest: 80, host: "808#{i}"
+       # CPU and Memory
+        ipam.vm.provider "libvirt" do |vb|
+          vb.memory = "1024"
+          vb.cpus = "1"
+          vb.nested = "true"
+        end
+    end
+  end
+end
