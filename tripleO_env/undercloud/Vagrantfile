@@ -10,17 +10,17 @@ Vagrant.configure(2) do |config|
         under.vm.box = "centos/7"
         under.vm.hostname = "ooo0#{i}"
         under.vm.network :private_network, ip: "10.0.0.0#{i}"
-        under.vm.network :private_network, ip: "10.0.2.0#{i}"
-        under.vm.network :private_network, ip: "10.0.4.0#{i}"
-        under.vm.network :private_network, ip: "10.0.10.0#{i}"
-        under.vm.network "forwarded_port", guest: 80, host: "8#{i}"
+        under.vm.network :public_network, :dev => "br-ex", :mode => "bridge", :type => "bridge"
+        under.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge"
+        under.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", ip: "10.1.2.10"
+        under.vm.network "forwarded_port", guest: 80, host: "800#{i}"
         #Size the libvirt VM
         under.vm.provider "libvirt" do |vb|
-          vb.memory = "8192"
-          vb.cpus = "2"
+          vb.memory = "12288"
+          vb.cpus = "4"
+          vb.nested = "true"
         end
         under.vm.provision :shell, path: "../bootstrp-bash.sh"
-        under.vm.provision :shell, path: "../bootstrp-common.sh"
     end
   end
 
