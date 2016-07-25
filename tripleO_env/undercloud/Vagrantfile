@@ -21,6 +21,7 @@ Vagrant.configure(2) do |config|
           vb.nested = "true"
         end
         under.vm.provision :shell, path: "../bootstrp-bash.sh"
+        under.vm.provision :shell, path: "../bootstrp-under.sh"
     end
   end
 
