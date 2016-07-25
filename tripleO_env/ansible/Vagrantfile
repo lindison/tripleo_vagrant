@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
 
         end
         acs.vm.provision :shell, path: "../bootstrp-bash.sh"
-        acs.vm.provision :shell, path: "../bootstrp-ansible.sh"
+        acs.vm.provision :shell, path: "bootstrp-ansible.sh"
     end
   end
 
