@@ -17,6 +17,7 @@ PS1="vm-\[\033[38;5;11m\]\h\[$(tput sgr0)\]\[\033[38;5;15m\] \[$(tput sgr0)\]\[\
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias vim='vim'
 
 EOL
 
