@@ -1,4 +1,6 @@
 # Vagrant build for an OpenStack environment
+Holding, working with RH installer. 
+
 ## Used Vagrant Plugins
 
 https://github.com/vagrant-libvirt
