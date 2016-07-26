@@ -5,7 +5,7 @@ sudo sed -i 's/\[delorean\]/\[delorean-current\]/' /etc/yum.repos.d/delorean-cur
 sudo curl -L -o /etc/yum.repos.d/delorean-deps.repo http://trunk.rdoproject.org/centos7/delorean-deps.repo
 sudo yum -y install yum-plugin-priorities
 sudo yum install -y python-tripleoclient
-# cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
+cp /usr/share/instack-undercloud/undercloud.conf.sample ~/undercloud.conf
 export DIB_INSTALLTYPE_puppet_modules=source
 openssl genrsa -out privkey.pem 2048
 openssl req \
