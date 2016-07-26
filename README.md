@@ -1,4 +1,9 @@
 # Vagrant build for an OpenStack environment
+## Used Vagrant Plugins
+
+https://github.com/vagrant-libvirt
+https://github.com/sciurus/vagrant-mutate
+
 ## Working items
 0. Working on PXE boot
   * PXE is generally working but need to get undercloud stable
