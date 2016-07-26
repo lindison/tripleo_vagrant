@@ -9,7 +9,7 @@ Vagrant.configure(2) do |config|
     config.vm.define "ansible0#{i}" do |acs|
         acs.vm.box = "yk0/ubuntu-xenial"
         acs.vm.hostname = "ansible0#{i}"
-        acs.vm.network :private_network, ip: "10.0.0.5#{i}"
+        acs.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge"
 #        acs.vm.network "forwarded_port", guest: 80, host: 31480
         acs.vm.provider "libvirt" do |vb|
           vb.memory = "2048"
