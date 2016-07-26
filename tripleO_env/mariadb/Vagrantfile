@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Boxes to build a baseline Triple0 deployment
+
+Vagrant.configure(2) do |config|
+  # Create MariaDB Cluster
+  (1..1).each do |i|
+    config.vm.define "maria0#{i}" do |maria|
+        maria.vm.box = "centos/7"
+        maria.vm.hostname = "maria0#{i}"
+        maria.vm.network :public_network, :dev => "br-ex", :mode => "bridge", :type => "bridge"
+        maria.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge"
+        maria.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", ip: "10.1.2.5"
+
+#        acs.vm.network "forwarded_port", guest: 80, host: 31480
+        maria.vm.provider "libvirt" do |vb|
+          vb.memory = "2048"
+
+        end
+        maria.vm.provision :shell, path: "../bootstrp-bash.sh"
+        maria.vm.provision :shell, path: "bootstrp-maria.sh"
+    end
+  end
+
+end
