@@ -3,6 +3,7 @@
 
 https://github.com/vagrant-libvirt
 https://github.com/sciurus/vagrant-mutate
+https://github.com/jedi4ever/sahara
 
 ## Working items
 0. Working on PXE boot
