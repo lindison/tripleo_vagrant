@@ -8,12 +8,13 @@ systemctl disable NetworkManager
 systemctl stop NetworkManager
 systemctl enable network
 systemctl start network
-#yum update
-#yum install -y centos-release-openstack-mitaka
-#yum update -y
-#yum install -y openstack-packstack
-#packstack --allinone
-
+yum update
+yum install -y centos-release-openstack-mitaka
+yum update -y
+yum install -y openstack-packstack
+packstack --allinone
+cp /root/keystonerc_admin /home/vagrant/keystonerc_admin
+chown vagrant:vagrant /home/vagrant/keystonerc_admin
 
 # copy examples into /home/vagrant (from inside the mgmt node)
 # cp -a /vagrant/examples/* /home/vagrant/.examples
