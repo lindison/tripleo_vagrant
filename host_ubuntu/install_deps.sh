@@ -9,4 +9,5 @@ sudo apt-get install -y qemu-utils libxslt-dev libxml2-dev libvirt-dev zlib1g-de
 sudo vagrant plugin install vagrant-libvirt
 sudo vagrant plugin install vagrant-cachier
 sudo vagrant plugin install vagrant-mutate
+vagrant plugin install vagrant-hostmanager
 export VAGRANT_DEFAULT_PROVIDER=libvirt
