@@ -10,7 +10,6 @@ Vagrant.configure(2) do |config|
         centos.vm.box = "centos/7"
         centos.vm.hostname = "centos0#{i}"
         centos.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", :ip => "192.0.2.99"
-        centos.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge"
 #        centos.vm.network "forwarded_port", guest: 80, host: 31480
         centos.vm.provider "libvirt" do |vb|
           vb.memory = "4096"
