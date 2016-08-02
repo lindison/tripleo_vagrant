@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
         rdo.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge"
 #        rdo.vm.network "forwarded_port", guest: 80, host: 31480
         rdo.vm.provider "libvirt" do |vb|
-          vb.memory = "12500"
+          vb.memory = "8192"
           vb.cpus = "4"
 
         end
@@ -21,23 +21,5 @@ Vagrant.configure(2) do |config|
         rdo.vm.provision :shell, path: "bootstrp-rdo.sh"
     end
   end
-
-  # Create OverCLoud Compute Nodes for OpenStack
-  (1..3).each do |i|
-    config.vm.define "ceph0#{i}" do |compute|
-        compute.vm.box = "centos/7"
-        compute.vm.hostname = "ceph0#{i}"
-        compute.vm.network :public_network, :dev => "br-ex", :mode => "bridge", :type => "bridge"
-        compute.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge"
-#        compute.vm.network "forwarded_port", guest: 80, host: 31480
-        compute.vm.provider "libvirt" do |vb|
-          vb.memory = "2048"
-          vb.cpus = "2"
-          vb.nested = "true"
-        end
-        compute.vm.provision :shell, path: "../bootstrp-bash.sh"
-    end
-  end
-
 
 end
