@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 
-# install ansible (http://docs.ansible.com/intro_installation.html)
+# install MariaDB (https://mariadb.com/kb/en/mariadb/yum/)
+
+touch /etc/yum.repos.d/MariaDB.repo
+
+cat >> /etc/yum.repos.d/MariaDB.repo <<EOL
+[mariadb]
+name = MariaDB
+baseurl = http://yum.mariadb.org/10.1/centos7-amd64
+gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
+gpgcheck=1
+EOL
+
+yum install -y MariaDB-server MariaDB-client
 
 # copy examples into /home/vagrant (from inside the mgmt node)
 # cp -a /vagrant/examples/* /home/vagrant/.examples
