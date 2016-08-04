@@ -1,0 +1,92 @@
+<network>
+  <name>00-PXE</name>
+  <uuid>1e772051-db3a-4a3b-807a-0a532090b455</uuid>
+  <bridge name='virbr2' stp='on' delay='0'/>
+  <mac address='52:54:00:56:98:ad'/>
+  <domain name='PXE_Network'/>
+  <ip address='10.0.0.1' netmask='255.255.254.0'>
+  </ip>
+</network>
+
+<network>
+  <name>20-MANAGEMENT</name>
+  <uuid>ee0bbca6-056d-4a90-ad6b-7157c23ee0c2</uuid>
+  <bridge name='virbr12' stp='on' delay='0'/>
+  <mac address='52:54:00:d0:d0:d1'/>
+  <domain name='provisioning'/>
+  <ip address='10.0.2.1' netmask='255.255.254.0'>
+  </ip>
+</network>
+
+<network>
+  <name>40-STORAGE</name>
+  <uuid>b1d201e4-aaee-41d6-99cb-a7f6c405aa3b</uuid>
+  <bridge name='virbr3' stp='on' delay='0'/>
+  <mac address='52:54:00:5b:c3:10'/>
+  <domain name='STORAGE'/>
+  <ip address='10.0.4.1' netmask='255.255.254.0'>
+  </ip>
+</network>
+
+<network>
+  <name>60-TENANT</name>
+  <uuid>148c0546-8e73-41d8-bd7e-02b076b5b2ff</uuid>
+  <bridge name='virbr4' stp='on' delay='0'/>
+  <mac address='52:54:00:0d:57:46'/>
+  <domain name='TENANT'/>
+  <ip address='10.0.6.1' netmask='255.255.254.0'>
+  </ip>
+</network>
+
+<network>
+  <name>80-ILO</name>
+  <uuid>a94cd507-95e1-4a96-84ba-3106bdc4904a</uuid>
+  <bridge name='virbr8' stp='on' delay='0'/>
+  <mac address='52:54:00:f3:4a:4f'/>
+  <domain name='ILO'/>
+  <ip address='10.0.8.1' netmask='255.255.254.0'>
+  </ip>
+</network>
+
+<network>
+  <name>98-OUTSIDE</name>
+  <uuid>e457ab96-0444-4519-9a44-57757d18100c</uuid>
+  <forward dev='br-ex' mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+    <interface dev='br-ex'/>
+  </forward>
+  <bridge name='virbr5' stp='on' delay='0'/>
+  <mac address='52:54:00:6d:2b:cd'/>
+  <domain name='OUTSIDE'/>
+  <ip address='64.106.198.193' netmask='255.255.255.248'>
+  </ip>
+</network>
+
+<network>
+  <name>98-PUBLIC</name>
+  <uuid>e0bd92c2-51e6-4b74-883c-cd162d08c1d8</uuid>
+  <forward dev='br-ex' mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+    <interface dev='br-ex'/>
+  </forward>
+  <bridge name='virbr6' stp='on' delay='0'/>
+  <mac address='52:54:00:fd:74:22'/>
+  <domain name='PUBLIC'/>
+  <ip address='64.106.198.129' netmask='255.255.255.224'>
+  </ip>
+</network>
+
+<network>
+  <name>99-STORAGE_MGMT</name>
+  <uuid>d0b5b8a9-790a-433c-bc62-c909e67ecf01</uuid>
+  <bridge name='virbr7' stp='on' delay='0'/>
+  <mac address='52:54:00:1f:5a:14'/>
+  <domain name='STORAGE_MGMT'/>
+  <ip address='10.0.10.1' netmask='255.255.254.0'>
+  </ip>
+</network>
+
