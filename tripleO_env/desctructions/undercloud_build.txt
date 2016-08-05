@@ -1,9 +1,9 @@
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
-hostnamectl set-hostname undercloud.datapipe.com
-hostnamectl set-hostname --transient undercloud.datapipe.com
+hostnamectl set-hostname undercloud.local.com
+hostnamectl set-hostname --transient undercloud.local.com
 
 #Update transient name to /etc/hosts file
-vi /etc/hosts  (example: 127.0.0.1 undercloud.datapipe.com)
+vi /etc/hosts  (example: 127.0.0.1 undercloud.local.com)
 
 subscription-manager register
 subscription-manager subscribe --pool=8a85f98155e9947d0155ea71bc2b1389
@@ -25,7 +25,7 @@ mkdir images
 mkdir templates
 sudo yum install -y python-tripleoclient
 
-#Put customer specific config in here {{ DPundercloud.conf }}
+#Put customer specific config in here {{ undercloud.conf }}
 
 openstack undercloud install
 
