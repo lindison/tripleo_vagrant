@@ -16,7 +16,7 @@ jq . << EOF > ~/instackenv.json
         "$(sed -n 1p /tmp/nodes.txt)"
       ],
       "cpu": "4",
-      "memory": "4096",
+      "memory": "8192",
       "disk": "60",
       "arch": "x86_64",
       "pm_user": "root"
@@ -29,7 +29,7 @@ jq . << EOF > ~/instackenv.json
         "$(sed -n 2p /tmp/nodes.txt)"
       ],
       "cpu": "4",
-      "memory": "4096",
+      "memory": "8192",
       "disk": "60",
       "arch": "x86_64",
       "pm_user": "root"
@@ -42,7 +42,7 @@ jq . << EOF > ~/instackenv.json
         "$(sed -n 3p /tmp/nodes.txt)"
       ],
       "cpu": "4",
-      "memory": "4096",
+      "memory": "8192",
       "disk": "60",
       "arch": "x86_64",
       "pm_user": "root"
@@ -56,7 +56,59 @@ jq . << EOF > ~/instackenv.json
       ],
       "cpu": "4",
       "memory": "8192",
-      "disk": "40",
+      "disk": "60",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.1.128",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 5p /tmp/nodes.txt)"
+      ],
+      "cpu": "4",
+      "memory": "4096",
+      "disk": "60",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.1.128",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 6p /tmp/nodes.txt)"
+      ],
+      "cpu": "4",
+      "memory": "8192",
+      "disk": "60",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.1.128",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 7p /tmp/nodes.txt)"
+      ],
+      "cpu": "4",
+      "memory": "4096",
+      "disk": "60",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.1.128",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 8p /tmp/nodes.txt)"
+      ],
+      "cpu": "4",
+      "memory": "8192",
+      "disk": "60",
       "arch": "x86_64",
       "pm_user": "root"
     }
