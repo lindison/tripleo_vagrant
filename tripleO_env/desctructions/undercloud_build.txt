@@ -1,3 +1,5 @@
+# Start install of Undercloud
+
 echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
 hostnamectl set-hostname undercloud.local.com
 hostnamectl set-hostname --transient undercloud.local.com

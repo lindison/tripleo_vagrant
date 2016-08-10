@@ -1,30 +1,30 @@
 # This is the plan that I'm working with.
 
 1) Build the undercloud and update the dns name server on the subnets
-  a. update the undercloud box RH subscription
-  b. disable repos and enable OSP repos only
-  c. install the pre-reqs on the undercloud box
-  d. configure the undercloud.conf file
-  e. run the install of the undercloud
+  - update the undercloud box RH subscription
+  - disable repos and enable OSP repos only
+  - install the pre-reqs on the undercloud box
+  - configure the undercloud.conf file
+  - run the install of the undercloud
 2) Download the images
 3) configure the KVM box for working with OpenStack
-  a. configure the networks
-    i.    00-PXE Network
-    ii.   20-MGMT Network
-    iii.  40-STORAGE Network
-    iv.   60-TENANT Network
-    v.    80-ILO Network
-    vi.   98-OUTSIDE Network
-    vii.  99-PUBLIC Network
-    viii. 99-STORAGE_MGMT Network
-  b. configure the access for Undercloud to OpenStack
-  c. build the target PXE boxes
+  - configure the networks
+    -  00-PXE Network
+    -  20-MGMT Network
+    -  40-STORAGE Network
+    -  60-TENANT Network
+    -  80-ILO Network
+    -  98-OUTSIDE Network
+    -  99-PUBLIC Network
+    -  99-STORAGE_MGMT Network
+  - configure the access for Undercloud to OpenStack
+  - build the target PXE boxes
 5) Configure the UnderCloud to use pxe_ssh with the KVM Boxes
-  a. Create a service /usr/bin/bootif-fix
-  b. Start /usr/bin/bootif-fix service
+  - Create a service /usr/bin/bootif-fix
+  - Start /usr/bin/bootif-fix service
 6) Configure the instackenv.json using jq
-  a. use virsh to pull the mac addresses of the interface on 00-PXE for the PXE boxes
-  b. build the instackenv.json using jq
+  - use virsh to pull the mac addresses of the interface on 00-PXE for the PXE boxes
+  - build the instackenv.json using jq
 7) Import the PXE Boxes into Ironic
 8) Change the timeout values on the UnderCloud server for using KVM
 9) Create the correct flavors
@@ -33,7 +33,7 @@
 12) Tag the nodes with profiles
 13) Update the heat templates
 14) Run the openstack overcloud deploy using the heat templates
-  a. controller = 1 , compute = 1
+  - controller = 1 , compute = 1
 15) Login and validate the system is running
 16) Scale the openstack overcloud deploy
-  a. controller = 1 , compute = 4
+  - controller = 1 , compute = 4
