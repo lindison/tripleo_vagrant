@@ -20,3 +20,25 @@ Deploying templates in the directory /usr/share/openstack-tripleo-heat-templates
 > Stack overcloud UPDATE_COMPLETE
 Overcloud Endpoint: http://10.0.0.6:5000/v2.0
 Overcloud Deployed
+
+###Flavors:
+
+>Kilo-1-20, 1vCPU, 20GB RAM
+Kilo-1-40, 1vCPU, 40GB RAM
+Kilo-2-40, 2vCPU, 40GB RAM
+Kilo-2-80, 2vCPU, 80GB RAM
+Mega-2-16, 2vCPU, 16GB RAM
+Mega-4-16, 4vCPU, 16GB RAM
+Mega-4-32, 4vCPU, 32GB RAM
+Mega-8-32, 8vCPU, 32GB RAM
+Mega-8-64, 8vCPU, 64GB RAM
+
+###OS (assume 64bit on all):
+
+>Red Hat Enterprise Linux 6 (x86_64)
+Red Hat Enterprise Linux 7 (x86_64)
+Ubuntu LTS 14.04 (x86_64)
+CentOS 6 (x86_64)
+CentOS 7 (x86_64)
+Windows Server 2012 R2 (x86_64)
+OEL (x86_64)
