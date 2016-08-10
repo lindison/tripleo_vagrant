@@ -33,7 +33,7 @@ EOF
 ssh-copy-id stack@10.0.2.1
 
 #Get mac addresses for interfaces (top MAC is one needed)
-for i in {1..8}; do virsh -c qemu+ssh://root@192.168.1.128/system domiflist pxe0$i | awk '{print $5};'; done > /tmp/nodes.txt && cat /tmp/nodes.txt
+for i in {1..8}; do virsh -c qemu+ssh://root@192.168.1.128/system domiflist pxe0$i | awk '$3 == "00-PXE" {print $5};'; done > /tmp/nodes.txt && cat /tmp/nodes.txt
 
 # Create the json (refer to create_json_kvm doc)
 

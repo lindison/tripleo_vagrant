@@ -65,7 +65,7 @@ openstack baremetal import --json instackenv.json
 ironic node-list
 
 # Create flavors (as needed)
-openstack flavor create --id auto --ram 4096 --disk 58 --vcpus 4 kvm-baremetal
+openstack flavor create --id auto --ram 8192 --disk 58 --vcpus 1 kvm-baremetal
 openstack flavor set --property "cpu_arch"="x86_64" --property "capabilities:boot_option"="local" kvm-baremetal
 
 openstack baremetal configure boot
@@ -78,6 +78,9 @@ ironic node-update 9f74d16f-0aa8-4ceb-8d4d-aa65af99549a add properties/capabilit
 openstack overcloud profiles list
 
 Configure yml files:
-
+vi templates/network-environment.yaml
+vi templates/nic-configs/controller.yaml
 
 openstack overcloud deploy --templates --control-scale 1 --compute-scale 1 --neutron-tunnel-types vxlan --neutron-network-type vxlan
+
+openstack overcloud deploy --templates -e /usr/share/openstack-tripleo-heat-templates/environments/network-isolation.yaml -e ~/templates/network-environment.yaml -e ~/templates/firstboot-environment.yaml --control-scale 1 --compute-scale 1 --control-flavor control --compute-flavor compute --ntp-server pool.ntp.org --neutron-network-type vxlan --neutron-tunnel-types vxlan
