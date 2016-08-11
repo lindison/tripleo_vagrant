@@ -71,7 +71,7 @@ This should show ...
 `openstack catalog show nova`
 
 ## END UnderCloud Installed
-***
+---
 
 ### Prepare undercloud for deploying overcloud
 
