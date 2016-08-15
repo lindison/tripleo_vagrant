@@ -13,6 +13,9 @@ gpgcheck=1
 EOL
 
 yum install -y MariaDB-server MariaDB-client
+systemctl start mariadb
+yum install -y epel-release
+yum install -y MySQL-python
 
 # copy examples into /home/vagrant (from inside the mgmt node)
 # cp -a /vagrant/examples/* /home/vagrant/.examples
