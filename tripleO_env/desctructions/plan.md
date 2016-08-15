@@ -32,6 +32,7 @@
 11) Perform introspection of the PXE Boxes
 12) Tag the nodes with profiles
 13) Update the heat templates
+  - http://jodies.de/ipcalc?host=64.106.128.129&mask1=27&mask2=
 14) Run the openstack overcloud deploy using the heat templates
   - controller = 1 , compute = 1
 15) Login and validate the system is running
