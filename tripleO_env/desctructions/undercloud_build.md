@@ -7,11 +7,11 @@
 #Update transient name to /etc/hosts file
 `vi /etc/hosts`  (example: 127.0.0.1 undercloud.local.com)
 
-`subscription-manager register`
+`subscription-manager register`  
 
-`subscription-manager subscribe --pool=8a85f98155e9947d0155ea71bc2b1389`
+`subscription-manager subscribe --pool=8a85f98155e9947d0155ea71bc2b1389`  
 
-`subscription-manager repos --disable=*`
+`subscription-manager repos --disable=*`  
 
 `subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-openstack-8-rpms --enable=rhel-7-server-openstack-8-director-rpms --enable rhel-7-server-rh-common-rpms`
 
