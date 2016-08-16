@@ -107,6 +107,19 @@ jq . << EOF > ~/instackenv.json
         "$(sed -n 8p /tmp/nodes.txt)"
       ],
       "cpu": "4",
+      "memory": "4096",
+      "disk": "60",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.1.128",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 9p /tmp/nodes.txt)"
+      ],
+      "cpu": "4",
       "memory": "8192",
       "disk": "60",
       "arch": "x86_64",
