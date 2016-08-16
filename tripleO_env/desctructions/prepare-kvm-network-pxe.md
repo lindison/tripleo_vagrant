@@ -6,14 +6,14 @@ Much credit to Keith Tenzer and his great tutorial ("Red Hat OpenStack Platform 
 
 My config uses two Ubuntu 16.04 LTS servers.  
 
-Box one, 8 CPUs, 72GB RAM, 256 x 2 RAID0 SSD
-Box two, 8 CPUs, 32GB RAM, 256 x 2 RAID0 SSD, 512 x 5 RAID0 HDD
-Three routable networks between the boxes.
-10.0.0.0/24 - PXE Network (00-PXE)
-192.168.10.0/24 - Storage Network (40-STORAGE)
-192.168.1.0/24 - Management (20-MGMT)
+Box one, 8 CPUs, 72GB RAM, 256 x 2 RAID0 SSD  
+Box two, 8 CPUs, 32GB RAM, 256 x 2 RAID0 SSD, 512 x 5 RAID0 HDD  
+Three routable networks between the boxes.  
+10.0.0.0/24 - PXE Network (00-PXE)  
+192.168.10.0/24 - Storage Network (40-STORAGE)  
+192.168.1.0/24 - Management (20-MGMT)  
 
-4TB Synology NAS for LDAP, SSO, and iSCSI services
+4TB Synology NAS for LDAP, SSO, and iSCSI services  
 
 ## Configure the OpenStack Undercloud
 
