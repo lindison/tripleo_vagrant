@@ -124,21 +124,21 @@ https://github.com/linusali/osp-tools
 ### Configure undercloud to use pxe-ssh
 Use the shell script written by Kieth Tenzer.
 
-sudo su -
+`sudo su -
 cat << EOF > /usr/bin/bootif-fix
 #!/usr/bin/env bash
 
 while true;
         do find /httpboot/ -type f ! -iname "kernel" ! -iname "ramdisk" ! -iname "*.kernel" ! -iname "*.ramdisk" -exec sed -i 's|{mac|{net0/mac|g' {} +;
 done
-EOF
+EOF`
 
 ### Change Permissions of executable file
-chmod a+x /usr/bin/bootif-fix
+`chmod a+x /usr/bin/bootif-fix`
 
 
 ### Create bootif-fix service
-cat << EOF > /usr/lib/systemd/system/bootif-fix.service
+`cat << EOF > /usr/lib/systemd/system/bootif-fix.service
 [Unit]
 Description=Automated fix for incorrect iPXE BOOFIF
 
@@ -148,13 +148,13 @@ ExecStart=/usr/bin/bootif-fix
 
 [Install]
 WantedBy=multi-user.target
-EOF
+EOF`
 
 ### Restart services
-systemctl daemon-reload
-systemctl enable bootif-fix
-systemctl start bootif-fix
-exit
+`systemctl daemon-reload`  
+`systemctl enable bootif-fix`  
+`systemctl start bootif-fix`  
+`exit`  
 
 ### Create kvm-baremetal flavor
 openstack flavor create --id auto --ram 8192 --disk 58 --vcpus 1 kvm-baremetal
