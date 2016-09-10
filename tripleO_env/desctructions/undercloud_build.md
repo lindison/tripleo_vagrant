@@ -7,11 +7,11 @@
 #Update transient name to /etc/hosts file
 `vi /etc/hosts`  (example: 127.0.0.1 undercloud.local.com)
 
-`subscription-manager register`
+`subscription-manager register`  
 
-`subscription-manager subscribe --pool=8a85f98155e9947d0155ea71bc2b1389`
+`subscription-manager subscribe --pool=8a85f98155e9947d0155ea71bc2b1389`  
 
-`subscription-manager repos --disable=*`
+`subscription-manager repos --disable=*`  
 
 `subscription-manager repos --enable=rhel-7-server-rpms --enable=rhel-7-server-extras-rpms --enable=rhel-7-server-openstack-8-rpms --enable=rhel-7-server-openstack-8-director-rpms --enable rhel-7-server-rh-common-rpms`
 
@@ -125,7 +125,16 @@ neutron subnet-list
 
 `openstack baremetal introspection bulk start`
 
-### Tag nodes
+### Setup CEPH nodes
+
+https://access.redhat.com/documentation/en/red-hat-openstack-platform/8/paged/red-hat-ceph-storage-for-the-overcloud/chapter-2-creating-an-overcloud-with-ceph-storage-nodes
+
+## Tag nodes
+This can be done manually or with rules.
+
+### Dynamically mapping nodes to flavors.
+
+### Manually adding profiles to a node.
 
 `ironic node-update 4ef3ef19-f846-4c8d-a9fe-8778550e3ad9 add properties/capabilities='profile:compute,boot_option:local'`
 
@@ -137,6 +146,7 @@ neutron subnet-list
 - `vi templates/network-environment.yaml`
 - `vi templates/nic-configs/controller.yaml`
 
-`openstack overcloud deploy --templates --control-scale 1 --compute-scale 1 --neutron-tunnel-types vxlan --neutron-network-type vxlan`
+`openstack overcloud deploy --templates -e ~/templates/ips-from-pool.yaml --control-scale 1 --compute-scale 1 --ntp-server pool.ntp.org --neutron-tunnel-types vxlan --neutron-network-type vxlan`
 
+### Install OverCloud using user defined templates
 `openstack overcloud deploy --templates -e /usr/share/openstack-tripleo-heat-templates/environments/network-isolation.yaml -e ~/templates/network-environment.yaml -e ~/templates/firstboot-environment.yaml --control-scale 1 --compute-scale 1 --control-flavor control --compute-flavor compute --ntp-server pool.ntp.org --neutron-network-type vxlan --neutron-tunnel-types vxlan`
