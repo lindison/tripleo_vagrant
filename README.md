@@ -3,9 +3,9 @@ Holding, working with RH installer.
 
 ## Used Vagrant Plugins
 
-https://github.com/vagrant-libvirt
-https://github.com/sciurus/vagrant-mutate
-https://github.com/jedi4ever/sahara
+https://github.com/vagrant-libvirt  
+https://github.com/sciurus/vagrant-mutate  
+https://github.com/jedi4ever/sahara  
 
 ## Working items
 0. Working on PXE boot
