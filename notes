@@ -1,0 +1,1 @@
+openstack-service list|xargs systemctl stop

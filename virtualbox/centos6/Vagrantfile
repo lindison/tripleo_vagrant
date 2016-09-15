@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Boxes to build a baseline Triple0 deployment
+
+Vagrant.configure(2) do |config|
+  # Create an OverCloud Servers
+  (1..1).each do |i|
+    config.ssh.username = 'vagrant'
+    config.ssh.password = 'vagrant'
+    config.ssh.insert_key = 'false'
+    config.vm.define "zabbix0#{i}" do |centos|
+        centos.vm.box = "centos/6"
+        centos.vm.hostname = "zabbix0#{i}"
+        centos.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", :ip => "10.0.0.24#{i}"
+        centos.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge", :ip => "192.168.10.24#{i}"
+        centos.vm.network :public_network, :dev => "br-ex", :mode => "bridge", :type => "bridge", :ip => "192.168.1.24#{i}"
+#        centos.vm.network "forwarded_port", guest: 80, host: 31480
+        centos.vm.provider "libvirt" do |vb|
+          vb.memory = "4096"
+          vb.cpus = "2"
+
+        end
+        centos.vm.provision :shell, path: "bootstrp-bash.sh"
+    end
+  end
+end

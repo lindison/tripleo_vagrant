@@ -20,12 +20,12 @@ https://github.com/jedi4ever/sahara
   * update the Vagrant files in each of the folders to fit your needs
   * Define the "undercloud.conf.example" to fit your needs.
   * Vagrant file builds the following networks:
-    * 10.0.0.0/23
-    * 10.0.2.0/23 
-    * 10.0.4.0/23
-    * 10.0.6.0/23
-    * 10.0.10.0/23
-    * USES network 10.1.2.0/24 for PXE boots on a host bridge named "br-pxe"
+    * 10.0.0.0/24
+    * 10.0.2.0/24 
+    * 10.0.4.0/24
+    * 10.0.6.0/24
+    * 10.0.10.0/24
+    * USES network 10.0.0.0/24 for PXE boots on a host bridge named "br-pxe"
   * ./build_undercloud.sh builds the undercloud server. 
 
 ## This is a work in progress
