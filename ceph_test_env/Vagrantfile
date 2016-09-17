@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Boxes to build a baseline Triple0 deployment
+
+Vagrant.configure(2) do |config|
+  # Create an OverCloud Servers
+  (1..3).each do |i|
+    config.vm.define "node#{i}" do |centos|
+        centos.vm.box = "centos/7"
+        centos.vm.hostname = "centos0#{i}"
+        centos.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", :ip => "192.0.2.99"
+#        centos.vm.network "forwarded_port", guest: 80, host: 31480
+        centos.vm.provider "libvirt" do |vb|
+          vb.memory = "4096"
+          vb.cpus = "2"
+
+        end
+        centos.vm.provision :shell, path: "bootstrp-bash.sh"
+    end
+  end
+end
