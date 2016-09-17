@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+
+VAGRANTFILE_API_VERSION = "2"
+BOX_NAME = 'russmckendrick/centos7'
+HOSTNAME = 'rdo02'
+BOX_IP = '192.168.0.106'
+DOMAIN   = 'vagrant.dev'
+Vagrant.require_version '>= 1.4.0'
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+#Bypass issue with certs in 1.8.5
+config.ssh.username = 'vagrant'
+config.ssh.password = 'vagrant'
+config.ssh.insert_key = 'false'
+
+#Conifigure VM
+config.vm.box = BOX_NAME
+config.vm.define :rdo02
+config.vm.host_name = HOSTNAME + '.' + DOMAIN
+config.vm.synced_folder "./", "/vagrant", id: "vagrant-root",
+    owner: "vagrant",
+    group: "nobody",
+    mount_options: ["dmode=777,fmode=755"]
+config.vm.network :private_network, ip: BOX_IP
+# config.vm.network :public_network, :dev => "br-ex", :mode => "bridge", :type => "bridge"
+config.vm.provider "virtualbox" do |v|
+  v.memory = 2048
+  v.cpus = 1
+
+end
+
+config.vm.provision :shell, path: "bootstrp-liberty.sh"
+config.vm.provision :shell, path: "bootstrp-bash.sh"
+
+end
+

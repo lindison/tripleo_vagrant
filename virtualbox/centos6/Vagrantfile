@@ -6,8 +6,11 @@
 Vagrant.configure(2) do |config|
   # Create an OverCloud Servers
   (1..1).each do |i|
+    config.ssh.username = 'vagrant'
+    config.ssh.password = 'vagrant'
+    config.ssh.insert_key = 'false'
     config.vm.define "zabbix0#{i}" do |centos|
-        centos.vm.box = "centos/7"
+        centos.vm.box = "centos/6"
         centos.vm.hostname = "zabbix0#{i}"
         centos.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", :ip => "10.0.0.24#{i}"
         centos.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge", :ip => "192.168.10.24#{i}"

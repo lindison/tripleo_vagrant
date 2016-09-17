@@ -1,0 +1,24 @@
+# Define the Vagrant environment for Ansible 101
+#
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  #Bypass issue with certs in 1.8.5
+  config.ssh.username = 'vagrant'
+  config.ssh.password = 'vagrant'
+  config.ssh.insert_key = 'false'
+
+  # Create the Ansible Command Server
+  config.vm.define :acs do |acs|
+    acs.vm.box = "ubuntu/trusty64"
+    acs.vm.hostname = "acs"
+    acs.vm.network "private_network", ip: "192.168.56.100"
+    acs.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+    end
+    acs.vm.provision :shell, path: "bootstrap-acs.sh"
+  end
+
+end
