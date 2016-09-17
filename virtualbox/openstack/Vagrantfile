@@ -4,7 +4,7 @@
 
 VAGRANTFILE_API_VERSION = "2"
 BOX_NAME = 'russmckendrick/centos7'
-HOSTNAME = 'rdo02'
+HOSTNAME = 'mitaka'
 BOX_IP = '192.168.0.105'
 DOMAIN   = 'vagrant.dev'
 Vagrant.require_version '>= 1.4.0'
