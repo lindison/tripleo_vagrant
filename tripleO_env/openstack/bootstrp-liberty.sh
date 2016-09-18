@@ -12,7 +12,7 @@ yum update
 yum install -y centos-release-openstack-liberty
 yum update -y
 yum install -y openstack-packstack
-packstack --allinone
+packstack --allinone --answer-file=/home/vagrant/sync/packstack-answers.txt
 cp /root/keystonerc_admin /home/vagrant/keystonerc_admin
 chown vagrant:vagrant /home/vagrant/keystonerc_admin
 
