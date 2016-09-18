@@ -31,7 +31,7 @@ config.vm.provider "virtualbox" do |v|
 
 end
 
-config.vm.provision :shell, path: "bootstrp-zabbix.sh"
+config.vm.provision :shell, path: "bootstrp-nagios.sh"
 config.vm.provision :shell, path: "bootstrp-bash.sh"
 
 end
