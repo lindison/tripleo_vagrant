@@ -1,0 +1,28 @@
+heat_template_version: 2014-10-16
+
+resources:
+  userdata:
+    type: OS::Heat::MultipartMime
+    properties:
+      parts:
+      - config: {get_resource: one_config}
+      - config: {get_resource: two_config}
+
+  one_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      config: |
+        #!/bin/bash
+        useradd stack && echo "stack:redhat" | chpasswd && echo "stack ALL=(root) NOPASSWD:ALL" | tee -a /etc/sudoers.d/stack && chmod 0440 /etc/sudoers.d/stack
+
+  two_config:
+    type: OS::Heat::SoftwareConfig
+    properties:
+      config: |
+        #!/bin/bash
+        echo "two" > /tmp/two
+
+outputs:
+  OS::stack_id:
+    value: {get_resource: userdata}
+

@@ -1,0 +1,3 @@
+resource_registry:
+    OS::TripleO::NodeUserData: firstboot/local_account.yaml
+
