@@ -6,6 +6,8 @@
 Vagrant.configure(2) do |config|
   # Create OpenStack Server
   (1..1).each do |i|
+    config.ssh.username = 'vagrant'
+    config.ssh.password = 'vagrant'
     config.vm.define "rsyslog0#{i}" do |rdo|
         rdo.vm.box = "centos/7"
         rdo.vm.hostname = "nagios0#{i}"
