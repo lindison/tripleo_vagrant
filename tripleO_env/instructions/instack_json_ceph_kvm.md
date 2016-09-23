@@ -5,57 +5,70 @@ jq . << EOF > ~/instackenvceph.json
   "ssh-user": "root",
   "ssh-key": "$(cat ~/.ssh/id_rsa)",
   "power_manager": "nova.virt.baremetal.virtual_power_driver.VirtualPowerManager",
-  "host-ip": "192.168.1.119",
+  "host-ip": "192.168.10.207",
   "arch": "x86_64",
   "nodes": [
     {
-      "pm_addr": "192.168.1.119",
+      "pm_addr": "192.168.10.207",
       "pm_password": "$(cat ~/.ssh/id_rsa)",
       "pm_type": "pxe_ssh",
       "mac": [
-        "$(sed -n 1p /tmp/cephnodes.txt)"
+        "$(sed -n 1p /tmp/nodes.txt)"
       ],
       "cpu": "1",
-      "memory": "4096",
+      "memory": "2048",
       "disk": "100",
       "arch": "x86_64",
       "pm_user": "root"
     },
     {
-      "pm_addr": "192.168.1.119",
+      "pm_addr": "192.168.10.207",
       "pm_password": "$(cat ~/.ssh/id_rsa)",
       "pm_type": "pxe_ssh",
       "mac": [
-        "$(sed -n 2p /tmp/cephnodes.txt)"
-      ],
-      "cpu": "4",
-      "memory": "4096",
-      "disk": "100",
-      "arch": "x86_64",
-      "pm_user": "root"
-    },
-    {
-      "pm_addr": "192.168.1.119",
-      "pm_password": "$(cat ~/.ssh/id_rsa)",
-      "pm_type": "pxe_ssh",
-      "mac": [
-        "$(sed -n 3p /tmp/cephnodes.txt)"
-      ],
-      "cpu": "4",
-      "memory": "4096",
-      "disk": "100",
-      "arch": "x86_64",
-      "pm_user": "root"
-    },
-    {
-      "pm_addr": "192.168.1.119",
-      "pm_password": "$(cat ~/.ssh/id_rsa)",
-      "pm_type": "pxe_ssh",
-      "mac": [
-        "$(sed -n 4p /tmp/cephnodes.txt)"
+        "$(sed -n 2p /tmp/nodes.txt)"
       ],
       "cpu": "1",
-      "memory": "4096",
+      "memory": "2048",
+      "disk": "100",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.10.207",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 3p /tmp/nodes.txt)"
+      ],
+      "cpu": "1",
+      "memory": "2048",
+      "disk": "100",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.10.207",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 4p /tmp/nodes.txt)"
+      ],
+      "cpu": "1",
+      "memory": "2048",
+      "disk": "100",
+      "arch": "x86_64",
+      "pm_user": "root"
+    },
+    {
+      "pm_addr": "192.168.10.207",
+      "pm_password": "$(cat ~/.ssh/id_rsa)",
+      "pm_type": "pxe_ssh",
+      "mac": [
+        "$(sed -n 5p /tmp/nodes.txt)"
+      ],
+      "cpu": "1",
+      "memory": "2048",
       "disk": "100",
       "arch": "x86_64",
       "pm_user": "root"

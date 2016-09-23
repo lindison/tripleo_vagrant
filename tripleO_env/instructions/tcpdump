@@ -1,0 +1,6 @@
+tcpdump -nnvl -i enp4s0f0 -s 1500 -c 1 'ether proto 0x88cc'
+
+Determine what VLANs are presented on the interfaces.
+
+
+tcpdump -vvnle -i enp3s0f1 -s 1500 -c 1 '(ether[12:2]=0x88cc or ether[20:2]=0x2000)'

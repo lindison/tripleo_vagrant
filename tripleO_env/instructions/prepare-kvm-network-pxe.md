@@ -1,6 +1,6 @@
 # Using a KVM host as the lab server.
 
-Credit to Keith Tenzer for the work he's done on running OpenStack Director in KVM with a KVM hosted OverCloud. 
+Credit to Keith Tenzer for the work he's done on running OpenStack Director in KVM with a KVM hosted OverCloud.
 
 ## My lab config
 
@@ -87,10 +87,10 @@ EOF`
 ### Get mac addresses for interfaces (top MAC is one needed)
 There are several ways to get the mac addresses; the next step is an easy way but if the output of OSP changes, it'll no longer work. Another way is to copy it from the virt-manager; lastly, a dumpxml from virsh outputs the mac address as well.
 
-### To Watson (compute node host)
-for i in {1..8}; do virsh -c qemu+ssh://root@192.168.1.128/system domiflist pxe0$i | awk '$3 == "br-pxe" {print $5};'; done > /tmp/nodes.txt && cat /tmp/nodes.txt
+### To Jingles
+for i in {1..5}; do virsh -c qemu+ssh://root@192.168.10.207/system domiflist pxe0$i | awk '$3 == "br-pxe" {print $5};'; done > /tmp/nodes.txt && cat /tmp/nodes.txt
 
-### To jingles (ceph node host)
+### To Watson
 for i in {10..13}; do virsh -c qemu+ssh://root@192.168.1.119/system domiflist pxe$i | awk '$3 == "br-pxe" {print $5};'; done > /tmp/cephnodes.txt && cat /tmp/cephnodes.txt
 
 
@@ -151,10 +151,14 @@ WantedBy=multi-user.target
 EOF`
 
 ### Restart services
-`systemctl daemon-reload`  
-`systemctl enable bootif-fix`  
-`systemctl start bootif-fix`  
-`exit`  
+systemctl daemon-reload  
+systemctl enable bootif-fix    
+systemctl start bootif-fix  
+exit  
+
+## Create new flavors
+
+
 
 ### Create kvm-baremetal flavor
 `openstack flavor create --id auto --ram 8192 --disk 58 --vcpus 1 kvm-baremetal`

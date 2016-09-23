@@ -97,7 +97,7 @@ neutron subnet-list
 
 ### Need id
 
-`neutron subnet-update {{ subnet_id }} --dns-nameserver 10.0.0.2`
+`neutron subnet-update $subnetid --dns-nameserver 10.0.0.1`
 
 ### Create the json (refer to create_json_kvm doc)
 ### instructions are in instack_json_kvm.txt
@@ -117,9 +117,21 @@ neutron subnet-list
 
 ### Create flavors (as needed)
 
-`openstack flavor create --id auto --ram 8192 --disk 58 --vcpus 1 kvm-baremetal`
+### Delete original flavors
+`for n in control compute ceph-storage; do  nova flavor-delete $n;  done`  
 
-`openstack flavor set --property "cpu_arch"="x86_64" --property "capabilities:boot_option"="local" kvm-baremetal`
+### Validate Flavors deleted
+`nova flavor-list`  
+
+### Create new flavors
+`openstack flavor create --id auto --ram 2048 --disk 37 --vcpus 1 --swap 2048 control`  
+`openstack flavor create --id auto --ram 2048 --disk 37 --vcpus 1 --swap 2048 compute`  
+`openstack flavor create --id auto --ram 2048 --disk 37 --vcpus 1 --swap 2048 ceph-storage`  
+
+### Assign flavors to profiles
+`openstack flavor set --property "cpu_arch"="x86_64" --property "capabilities:boot_option"="local" --property "capabilities:profile"="control" control`  
+`openstack flavor set --property "cpu_arch"="x86_64" --property "capabilities:boot_option"="local" --property "capabilities:profile"="compute" compute`  
+`openstack flavor set --property "cpu_arch"="x86_64" --property "capabilities:boot_option"="local" --property "capabilities:profile"="ceph-storage" ceph-storage`  
 
 `openstack baremetal configure boot`
 
@@ -129,18 +141,18 @@ neutron subnet-list
 
 https://access.redhat.com/documentation/en/red-hat-openstack-platform/8/paged/red-hat-ceph-storage-for-the-overcloud/chapter-2-creating-an-overcloud-with-ceph-storage-nodes
 
-## Tag nodes
-This can be done manually or with rules.
-
-### Dynamically mapping nodes to flavors.
 
 ### Manually adding profiles to a node.
 
-`ironic node-update 4ef3ef19-f846-4c8d-a9fe-8778550e3ad9 add properties/capabilities='profile:compute,boot_option:local'`
+`ironic node-update $ctl01 add properties/capabilities='profile:control,boot_option:local'`  
+`ironic node-update $ctl02 add properties/capabilities='profile:control,boot_option:local'`  
+`ironic node-update $ctl03 add properties/capabilities='profile:control,boot_option:local'`  
+`ironic node-update $nova01 add properties/capabilities='profile:compute,boot_option:local'`  
+`ironic node-update $ceph01 add properties/capabilities='profile:ceph-storage,boot_option:local'`  
 
-`ironic node-update 9f74d16f-0aa8-4ceb-8d4d-aa65af99549a add properties/capabilities='profile:control,boot_option:local'`
+### Validate profiles were assigned.
 
-`openstack overcloud profiles list`
+`openstack overcloud profiles list`  
 
 ### Configure yml files:
 - `vi templates/network-environment.yaml`
