@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Boxes to build a baseline Triple0 deployment
+
+Vagrant.configure(2) do |config|
+  # Create OpenStack Server
+  (1..1).each do |i|
+    config.vm.define "rsyslog0#{i}" do |rdo|
+        rdo.vm.box = "centos/7"
+        rdo.vm.hostname = "nagios0#{i}"
+        rdo.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", :ip => "10.0.0.4"
+        #Size the libvirt VM
+        rdo.vm.provider "libvirt" do |vb|
+          vb.memory = "4096"
+          vb.cpus = "1"
+        end
+        rdo.vm.provision :shell, path: "bootstrp-bash.sh"
+        rdo.vm.provision :shell, path: "bootstrp-common.sh"
+        rdo.vm.provision :shell, path: "bootstrp-zabbix.sh"
+    end
+  end
+
+end
