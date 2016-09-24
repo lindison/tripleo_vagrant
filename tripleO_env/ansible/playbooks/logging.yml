@@ -1,0 +1,54 @@
+# configure rsyslog on nodes
+---
+- hosts: logging
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Check if rsyslog is installed on controller nodes
+      yum: pkg=rsyslog state=installed update_cache=True
+
+    - name: Update rsyslog.conf
+      blockinfile: |
+        dest=/etc/rsyslog.conf backup=yes
+        content='$template TmplMsg, "/var/log/%HOSTNAME%/%PROGRAMNAME%.log"
+        $template TmplAuth, "/var/log/%HOSTNAME%/%PROGRAMNAME%.log"
+        authpriv.*   ?TmplAuth
+        *.info,mail.none,authpriv.none,cron.none   ?TmplMsg'
+      notify: Restart rsyslog
+
+  handlers:
+    - name: Restart rsyslog
+      shell: systemctl restart rsyslog
+
+- hosts: controllers
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Check if rsyslog is installed on controller nodes
+      yum: pkg=rsyslog state=installed update_cache=True
+
+- hosts: compute
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Check if rsyslog is installed on controller nodes
+      yum: pkg=rsyslog state=installed update_cache=True  
+
+- hosts: ceph
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Check if rsyslog is installed on controller nodes
+      yum: pkg=rsyslog state=installed update_cache=True
