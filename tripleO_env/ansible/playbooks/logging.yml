@@ -1,28 +1,5 @@
-# configure rsyslog on nodes
+# Configure rsyslog on OpenStack nodes
 ---
-- hosts: logging
-  remote_user: heat-admin
-  connection: ssh
-  become: yes
-  become_method: sudo
-  vars:
-  tasks:
-    - name: Check if rsyslog is installed on controller nodes
-      yum: pkg=rsyslog state=installed update_cache=True
-
-    - name: Update rsyslog.conf
-      blockinfile: |
-        dest=/etc/rsyslog.conf backup=yes
-        content='$template TmplMsg, "/var/log/%HOSTNAME%/%PROGRAMNAME%.log"
-        $template TmplAuth, "/var/log/%HOSTNAME%/%PROGRAMNAME%.log"
-        authpriv.*   ?TmplAuth
-        *.info,mail.none,authpriv.none,cron.none   ?TmplMsg'
-      notify: Restart rsyslog
-
-  handlers:
-    - name: Restart rsyslog
-      shell: systemctl restart rsyslog
-
 - hosts: controllers
   remote_user: heat-admin
   connection: ssh
@@ -71,6 +48,17 @@
       - "DEFAULT use_syslog true"
       - "DEFAULT syslog_log_facility LOG_LOCAL4"
 
+    - name: Setup MySQL for rsyslog
+      blockinfile: |
+        dest=/etc/rsyslog.conf backup=yes
+        content='module(load="imfile" PollingInterval="1")
+        input(type="imfile"
+            File="/var/log/mysqld.log"
+            stateFile="statefile-mysql-general"
+            Tag="mysql-general"
+            Severity="warning"
+            Facility="local5")'
+
     - name: Restart rsyslog service
       service: name=rsyslog.service state=restarted enabled=yes
 
@@ -83,6 +71,33 @@
   tasks:
     - name: Check if rsyslog is installed on controller nodes
       yum: pkg=rsyslog state=installed update_cache=True  
+
+    - name: Create /etc/rsyslog.d/client.conf
+      shell: "echo *.* @10.0.0.4:514 > /etc/rsyslog.d/client.conf"
+
+    - name: Setup /etc/nova/nova.conf for rsyslog
+      shell: "openstack-config --set /etc/nova/nova.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL0"
+
+    - name: Setup /etc/glance/glance-registry.conf for rsyslog
+      shell: "openstack-config --set /etc/glance/glance-registry.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL3"
+
+    - name: Setup /etc/glance/glance-api.conf for rsyslog
+      shell: "openstack-config --set /etc/cinder/cinder.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL4"
+
+    - name: Restart rsyslog service
+      service: name=rsyslog.service state=restarted enabled=yes
 
 - hosts: ceph
   remote_user: heat-admin
