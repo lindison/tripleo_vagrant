@@ -2,7 +2,7 @@
 
 resource_registry:
   OS::TripleO::BlockStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/cinder-storage.yaml
-  OS::TripleO::Compute::Net::SoftwareConfig: /home/stack/templates/nic-configs/compute-segregated.yaml
+  OS::TripleO::Compute::Net::SoftwareConfig: /home/stack/templates/nic-configs/compute.yaml
   OS::TripleO::Controller::Net::SoftwareConfig: /home/stack/templates/nic-configs/controller.yaml
   OS::TripleO::ObjectStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/swift-storage.yaml
   OS::TripleO::CephStorage::Net::SoftwareConfig: /home/stack/templates/nic-configs/ceph-storage.yaml
@@ -75,18 +75,18 @@ parameter_defaults:
   # will plug into br-int instead of br-ex)
   NeutronExternalNetworkBridge: "''"
   #InternalApiNetCidr: 10.0.12.0/23
-  TenantNetCidr: 192.168.1.1/24
+  TenantNetCidr: 192.168.10.1/24
   #StorageNetCidr: 10.0.4.0/23
   #StorageMgmtNetCidr: 10.0.10.0/23
   #ManagementNetCidr: 172.20.0.0/24
-  ExternalNetCidr: 10.0.2.0/23
+  ExternalNetCidr: 192.168.1.0/24
   #InternalApiAllocationPools: [{'start': '10.0.12.100', 'end': '10.0.13.200'}]
-  TenantAllocationPools: [{'start': '192.168.10.200', 'end': '192.168.10.230'}]
+  TenantAllocationPools: [{'start': '192.168.10.190', 'end': '192.168.10.230'}]
   #StorageAllocationPools: [{'start': '10.0.4.100', 'end': '10.0.4.200'}]
   #StorageMgmtAllocationPools: [{'start': '10.0.11.100', 'end': '10.0.11.200'}]
   #ManagementAllocationPools: [{'start': '172.20.0.10', 'end': '172.20.0.200'}]
   # Leave room for floating IPs in the External allocation pool
-  ExternalAllocationPools: [{'start': '192.168.1.160', 'end': '192.168.1.199'}]
+  ExternalAllocationPools: [{'start': '192.168.1.190', 'end': '192.168.1.225'}]
   # Set to the router gateway on the external network
   ExternalInterfaceDefaultRoute: 192.168.1.1
   # Gateway router for the provisioning network (or Undercloud IP)
