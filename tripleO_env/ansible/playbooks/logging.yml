@@ -1,6 +1,6 @@
 # Configure rsyslog on OpenStack nodes
 ---
-- hosts: controllers
+- hosts: control
   remote_user: heat-admin
   connection: ssh
   become: yes
