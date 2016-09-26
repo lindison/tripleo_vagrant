@@ -17,7 +17,6 @@ Vagrant.configure(2) do |config|
         end
         rdo.vm.provision :shell, path: "bootstrp-bash.sh"
         rdo.vm.provision :shell, path: "bootstrp-common.sh"
-        rdo.vm.provision :shell, path: "bootstrp-zabbix.sh"
     end
   end
 

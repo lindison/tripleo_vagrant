@@ -6,18 +6,14 @@
 Vagrant.configure(2) do |config|
   # Create OpenStack Server
   (1..1).each do |i|
-    config.vm.define "ooo0#{i}" do |rdo|
+    config.vm.define "osp0#{i}" do |rdo|
         rdo.vm.box = "centos/7"
-        rdo.vm.hostname = "ooo0#{i}"
-        rdo.vm.network :public_network, :dev => "br-int", :mode => "bridge", :type => "bridge"
-        rdo.vm.network :private_network, ip: "172.16.80.200" 
-        #rdo.vm.network :private_network, ip: "10.0.2.0#{i}"
-        #rdo.vm.network :private_network, ip: "10.0.4.0#{i}"
-        #rdo.vm.network :private_network, ip: "10.0.10.0#{i}"
+        rdo.vm.hostname = "osp0#{i}"
+        rdo.vm.network :public_network, :dev => "br-pxe", :mode => "bridge", :type => "bridge", :ip => "10.0.0.5"
         #Size the libvirt VM
         rdo.vm.provider "libvirt" do |vb|
-          vb.memory = "20480"
-          vb.cpus = "4"
+          vb.memory = "4096"
+          vb.cpus = "1"
         end
         rdo.vm.provision :shell, path: "bootstrp-bash.sh"
         rdo.vm.provision :shell, path: "bootstrp-common.sh"
