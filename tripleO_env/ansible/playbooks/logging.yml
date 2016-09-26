@@ -33,6 +33,47 @@
     - name: Check if rsyslog is installed on controller nodes
       yum: pkg=rsyslog state=installed update_cache=True
 
+    - name: Create /etc/rsyslog.d/client.conf
+      shell: "echo *.* @10.0.0.4:514 > /etc/rsyslog.d/client.conf"
+
+    - name: Setup /etc/nova/nova.conf for rsyslog
+      shell: "openstack-config --set /etc/nova/nova.conf {{ item }}"
+      with_items: 
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL0"
+
+    - name: Setup /etc/keystone/keystone.conf for rsyslog
+      shell: "openstack-config --set /etc/keystone/keystone.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL1"
+
+    - name: Setup /etc/glance/glance-api.conf for rsyslog
+      shell: "openstack-config --set /etc/glance/glance-api.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL2"
+
+    - name: Setup /etc/glance/glance-registry.conf for rsyslog
+      shell: "openstack-config --set /etc/glance/glance-registry.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL3"
+
+    - name: Setup /etc/glance/glance-api.conf for rsyslog
+      shell: "openstack-config --set /etc/cinder/cinder.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL4"
+
+    - name: Restart rsyslog service
+      service: name=rsyslog.service state=restarted enabled=yes
+
 - hosts: compute
   remote_user: heat-admin
   connection: ssh
@@ -52,3 +93,13 @@
   tasks:
     - name: Check if rsyslog is installed on controller nodes
       yum: pkg=rsyslog state=installed update_cache=True
+
+- hosts: rsyslog
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Restart rsyslog service
+      service: name=rsyslog.service state=restarted enabled=yes
+
