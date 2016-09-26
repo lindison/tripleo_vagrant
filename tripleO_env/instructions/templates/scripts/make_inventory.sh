@@ -29,8 +29,20 @@ echo "create ansible hosts file"
 
 echo "[rsyslog]" > /etc/ansible/hosts
 echo "rsyslog" >> /etc/ansible/hosts
-echo "[openstack]" >> /etc/ansible/hosts
-cat /tmp/ansible_nodes >> /etc/ansible/hosts
+echo "[compute]" >> /etc/ansible/hosts
+cat /tmp/ansible_nodes | grep compute >> /etc/ansible/hosts
+echo "[control]" >> /etc/ansible/hosts
+cat /tmp/ansible_nodes | grep control >> /etc/ansible/hosts
+echo "[ceph]" >> /etc/ansible/hosts
+cat /tmp/ansible_nodes | grep ceph >> /etc/ansible/hosts
 
-echo "ANSIBLE PING TEST"
+echo "ANSIBLE ALL PING TEST"
 su stack -s /bin/bash -c 'ansible all -m ping -u heat-admin'
+echo "ANSIBLE CEPH PING TEST"
+su stack -s /bin/bash -c 'ansible ceph -m ping -u heat-admin'
+echo "ANSIBLE COMPUTE PING TEST"
+su stack -s /bin/bash -c 'ansible compute -m ping -u heat-admin'
+echo "ANSIBLE CONTROL PING TEST"
+su stack -s /bin/bash -c 'ansible control -m ping -u heat-admin'
+echo "ANSIBLE RSYSLOG PING TEST"
+su stack -s /bin/bash -c 'ansible rsyslog -m ping -u heat-admin'
