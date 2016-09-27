@@ -1,5 +1,17 @@
 # Configure rsyslog on OpenStack nodes
 ---
+- hosts: openstack
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Register nodes to RH Subscription
+      redhat_subscription: state=present
+                           username="{{ lookup('ini', 'user section=rh_subscription file=/tmp/passwordfile') }}"
+                           password="{{ lookup('ini', 'pass section=rh_subscription file=/tmp/passwordfile') }}"
+
 - hosts: control
   remote_user: heat-admin
   connection: ssh

@@ -1,0 +1,27 @@
+--- # Install and configure Nagios
+- hosts: rsyslog
+  remote_user: heat-admin
+  become: yes
+  become_method: sudo
+  connection: ssh
+  vars:
+  tasks:
+  - name: Check for install dependencies
+    yum: pkg={{ item }} state=installed
+    with_items:
+    - nagios
+    - nagios-devel
+    - httpd
+    - gd
+    - gd-devel
+    - php
+    - gcc
+    - glibc
+    - glibc-common
+  
+  - name: Start and Enable Services
+    service: name={{ item }} state=started enabled=true
+    with_items: 
+    - nagios
+    - httpd
+

@@ -27,7 +27,11 @@ chown stack:stack /home/stack/.ssh/known_hosts
 
 echo "create ansible hosts file"
 
-echo "[rsyslog]" > /etc/ansible/hosts
+echo "[openstack:children]" > /etc/ansible/hosts
+echo "ceph" >> /etc/ansible/hosts
+echo "control" >> /etc/ansible/hosts
+echo "compute" >> /etc/ansible/hosts
+echo "[rsyslog]" >> /etc/ansible/hosts
 echo "rsyslog" >> /etc/ansible/hosts
 echo "[compute]" >> /etc/ansible/hosts
 cat /tmp/ansible_nodes | grep compute >> /etc/ansible/hosts
