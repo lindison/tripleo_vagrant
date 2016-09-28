@@ -1,0 +1,11 @@
+--- # Add default route to compute nodes
+- hosts: openstack
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  gather_facts: no
+  vars:
+  tasks:
+    - name: Update Route
+      shell: "route add default gw 192.168.10.1"
