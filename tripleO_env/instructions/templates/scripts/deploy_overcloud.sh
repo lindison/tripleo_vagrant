@@ -13,4 +13,3 @@ openstack overcloud deploy --templates --validation-errors-fatal --validation-wa
           --swift-storage-scale 0 \
           --block-storage-scale 0 \
           --ntp-server 24.56.178.140
-
