@@ -8,9 +8,8 @@ openstack overcloud deploy --templates --validation-errors-fatal --validation-wa
           --control-flavor control \
           --compute-flavor compute \
           --control-scale 3 \
-          --compute-scale 1 \
+          --compute-scale 5 \
           --ceph-storage-scale 0 \
           --swift-storage-scale 0 \
           --block-storage-scale 0 \
           --ntp-server 24.56.178.140
-
