@@ -23,6 +23,7 @@ echo "10.0.0.4" >> /tmp/ips
 echo "rsyslog" >> /tmp/names_nodes
 for i in $(cat /tmp/ips); do ssh-keyscan $i >> /home/stack/.ssh/known_hosts; done
 for i in $(cat /tmp/names_nodes); do ssh-keyscan $i >> /home/stack/.ssh/known_hosts; done
+ssh-keyscan undercloud >> /home/stack/.ssh/known_hosts
 chown stack:stack /home/stack/.ssh/known_hosts
 
 echo "create ansible hosts file"
@@ -39,6 +40,8 @@ echo "[control]" >> /etc/ansible/hosts
 cat /tmp/ansible_nodes | grep control >> /etc/ansible/hosts
 echo "[ceph]" >> /etc/ansible/hosts
 cat /tmp/ansible_nodes | grep ceph >> /etc/ansible/hosts
+echo "[undercloud]" >> /etc/ansible/hosts
+echo "undercloud" >> /etc/ansible/hosts
 
 echo "ANSIBLE ALL PING TEST"
 su stack -s /bin/bash -c 'ansible all -m ping -u heat-admin'

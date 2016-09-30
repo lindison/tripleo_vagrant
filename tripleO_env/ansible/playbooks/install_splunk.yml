@@ -1,0 +1,26 @@
+--- # Install Splunk
+- hosts: rsyslog
+  remote_user: heat-admin
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: no
+  vars:
+  tasks:
+    - name: Ensure wget is installed
+      yum: pkg=wget state=installed
+   
+    - name: Check for Splunk rpm package
+      command: /usr/bin/test -e /root/splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm
+      register: splunkdl
+      ignore_errors: True 
+  
+    - name: WGET Splunk from webstiedd
+      shell: chdir=/root/ wget -O splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.5.0&product=splunk_light&filename=splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm&wget=true'
+      when: splunkdl|failed
+
+    - name: Install Splunk
+      yum: name=/root/splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm state=present
+
+    - name: Start Splunk
+      shell: ./splunk start --accept-license chdir=/opt/splunk/bin
