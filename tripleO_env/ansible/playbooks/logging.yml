@@ -1,0 +1,149 @@
+# Configure rsyslog on OpenStack nodes
+---
+- hosts: openstack
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Register nodes to RH Subscription
+      redhat_subscription: state=present
+                           username="{{ lookup('ini', 'user section=rh_subscription file=/tmp/passwordfile') }}"
+                           password="{{ lookup('ini', 'pass section=rh_subscription file=/tmp/passwordfile') }}"
+
+- hosts: control
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Check if rsyslog is installed on controller nodes
+      yum: pkg=rsyslog state=installed update_cache=True
+
+    - name: Create /etc/rsyslog.d/client.conf
+      shell: echo "*.* @10.0.0.4:514" > /etc/rsyslog.d/client.conf
+
+    - name: Setup /etc/nova/nova.conf for rsyslog
+      shell: "openstack-config --set /etc/nova/nova.conf {{ item }}"
+      with_items: 
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL0"
+
+    - name: Setup /etc/keystone/keystone.conf for rsyslog
+      shell: "openstack-config --set /etc/keystone/keystone.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL1"
+
+    - name: Setup /etc/glance/glance-api.conf for rsyslog
+      shell: "openstack-config --set /etc/glance/glance-api.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL2"
+
+    - name: Setup /etc/glance/glance-registry.conf for rsyslog
+      shell: "openstack-config --set /etc/glance/glance-registry.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL3"
+
+    - name: Setup /etc/cinder/cinder.conf for rsyslog
+      shell: "openstack-config --set /etc/cinder/cinder.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL4"
+
+    - name: Setup MySQL for rsyslog
+      blockinfile: |
+        dest=/etc/rsyslog.conf backup=yes
+        content='module(load="imfile" PollingInterval="1")
+        input(type="imfile"
+        File="/var/log/mysqld.log"
+        stateFile="statefile-mysql-general"
+        Tag="mysql-general"
+        Severity="warning"
+        Facility="local5")'
+
+    - name: Restart rsyslog service
+      service: name=rsyslog.service state=restarted enabled=yes
+
+- hosts: compute
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Check if rsyslog is installed on compute nodes
+      yum: pkg=rsyslog state=installed update_cache=True  
+
+    - name: Create /etc/rsyslog.d/client.conf
+      shell: echo "*.* @10.0.0.4:514" > /etc/rsyslog.d/client.conf
+
+    - name: Setup /etc/nova/nova.conf for rsyslog
+      shell: "openstack-config --set /etc/nova/nova.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL0"
+
+    - name: Setup /etc/glance/glance-registry.conf for rsyslog
+      shell: "openstack-config --set /etc/glance/glance-registry.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL3"
+
+    - name: Setup /etc/cinder/cinder.conf for rsyslog
+      shell: "openstack-config --set /etc/cinder/cinder.conf {{ item }}"
+      with_items:
+      - "DEFAULT debug false"
+      - "DEFAULT use_syslog true"
+      - "DEFAULT syslog_log_facility LOG_LOCAL4"
+
+    - name: Restart rsyslog service
+      service: name=rsyslog.service state=restarted enabled=yes
+
+- hosts: ceph
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  vars:
+  tasks:
+    - name: Check if rsyslog is installed on controller nodes
+      yum: pkg=rsyslog state=installed update_cache=True
+
+- hosts: rsyslog
+  remote_user: heat-admin
+  connection: ssh
+  become: yes
+  become_method: sudo
+  tasks:
+    - name: Restart rsyslog service
+      service: name=rsyslog.service state=restarted enabled=yes
+
+    - name: Ensure wget is installed
+      yum: pkg=wget state=installed
+   
+    - name: Check for Splunk rpm package
+      command: /usr/bin/test -e /root/splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm
+      register: splunkdl
+      ignore_errors: True 
+  
+    - name: WGET Splunk from webstiedd
+      shell: chdir=/root/ wget -O splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm 'https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=6.5.0&product=splunk_light&filename=splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm&wget=true'
+      when: splunkdl|failed
+
+    - name: Install Splunk
+      yum: name=/root/splunklight-6.5.0-59c8927def0f-linux-2.6-x86_64.rpm state=present
+
+    - name: Start Splunk
+      shell: ./splunk start --accept-license chdir=/opt/splunk/bin
