@@ -1,0 +1,9 @@
+---
+- hosts: openstack
+  remote_user: heat-admin
+  connection: ssh
+  gather_facts: no
+  vars:
+  tasks: 
+    - name: Copy overcloudrc to overcloud servers
+      copy: src=/home/stack/overcloudrc dest=/home/heat-admin/ owner=heat-admin group=heat-admin mode=0644

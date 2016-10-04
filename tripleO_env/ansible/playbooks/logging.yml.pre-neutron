@@ -42,25 +42,6 @@
     - name: Add rsyslog to Splunk
       shell: splunk add monitor /var/log/rsyslog/
       ignore_errors: yes
-
-    - name: Validate Nagios Install
-      yum: pkg={{ item }} state=installed
-      with_items:
-        - nagios
-        - nagios-devel
-        - httpd
-        - gd
-        - gd-devel
-        - php
-        - gcc
-        - glibc
-        - glibc-common
-
-    - name: Validate Nagios Services
-      service: name={{ item }} state=started enabled=true
-      with_items:
-        - nagios
-        - httpd
  
 - hosts: openstack
   remote_user: heat-admin
@@ -73,9 +54,6 @@
       redhat_subscription: state=present
                            username="{{ lookup('ini', 'user section=rh_subscription file=/tmp/passwordfile') }}"
                            password="{{ lookup('ini', 'pass section=rh_subscription file=/tmp/passwordfile') }}"
-
-    - name: Copy overcloudrc to overcloud servers
-      copy: src=/home/stack/overcloudrc dest=/home/heat-admin/ owner=heat-admin group=heat-admin mode=0644
 
 - hosts: control
   remote_user: heat-admin
@@ -128,13 +106,6 @@
       - "DEFAULT use_syslog true"
       - "DEFAULT syslog_log_facility LOG_LOCAL4"
 
-    - name: Setup /etc/neutron/neutron.conf for rsyslog
-      shell: "openstack-config --set /etc/neutron/neutron.conf {{ item }}"
-      with_items:
-      - "DEFAULT debug false"
-      - "DEFAULT use_syslog true"
-      - "DEFAULT syslog_log_facility LOG_LOCAL5"
-
     - name: Setup MySQL for rsyslog
       blockinfile: |
         dest=/etc/rsyslog.conf backup=yes
@@ -144,7 +115,7 @@
         stateFile="statefile-mysql-general"
         Tag="mysql-general"
         Severity="warning"
-        Facility="local6")'
+        Facility="local5")'
     
     - name: Restart rsyslog service
       service: name=rsyslog.service state=restarted enabled=yes
@@ -175,13 +146,6 @@
       - "DEFAULT debug false"
       - "DEFAULT use_syslog true"
       - "DEFAULT syslog_log_facility LOG_LOCAL3"
-
-    - name: Setup /etc/neutron/neutron.conf for rsyslog
-      shell: "openstack-config --set /etc/neutron/neutron.conf {{ item }}"
-      with_items:
-      - "DEFAULT debug false"
-      - "DEFAULT use_syslog true"
-      - "DEFAULT syslog_log_facility LOG_LOCAL5"
 
     - name: Setup /etc/cinder/cinder.conf for rsyslog
       shell: "openstack-config --set /etc/cinder/cinder.conf {{ item }}"

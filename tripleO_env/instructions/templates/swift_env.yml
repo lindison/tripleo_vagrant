@@ -1,0 +1,4 @@
+parameter_defaults:
+  controllerExtraConfig:
+    swift::proxy::enabled: false
+    swift::service::enabled: false

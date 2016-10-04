@@ -1,0 +1,27 @@
+---
+- hosts: control
+  remote_user: heat-admin
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: no
+  vars:
+  tasks:
+    - name: Restart 
+      service: name={{ item }} state=restarted
+      with_items:
+        - openstack-nova-api
+        - openstack-nova-cert
+        - openstack-nova-consoleauth
+        - openstack-nova-scheduler
+        - openstack-nova-conductor
+        - openstack-nova-novncproxy
+        - neutron-server
+        - neutron-dhcp-agent
+        - neutron-l3-agent
+        - neutron-metadata-agent
+        - neutron-openvswitch-agent
+        - openstack-cinder-api 
+        - openstack-cinder-backup
+        - openstack-cinder-scheduler
+        - openstack-cinder-volume
